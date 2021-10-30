@@ -10,13 +10,18 @@ import static java.util.Map.entry;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentOffer;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.IronGolem;
 import org.bukkit.entity.Item;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.PigZombie;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -24,10 +29,12 @@ import org.bukkit.event.block.BlockDropItemEvent;
 import org.bukkit.event.enchantment.PrepareItemEnchantEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityPickupItemEvent;
+import org.bukkit.event.entity.PiglinBarterEvent;
 import org.bukkit.event.entity.VillagerAcquireTradeEvent;
 import org.bukkit.event.inventory.InventoryEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
+import org.bukkit.event.inventory.PrepareSmithingEvent;
 import org.bukkit.event.server.BroadcastMessageEvent;
 import org.bukkit.event.world.LootGenerateEvent;
 import org.bukkit.inventory.Inventory;
@@ -100,12 +107,40 @@ public class MyListener implements Listener {
                     ItemStack item = iterator.next();
                     if(item.getType().equals(Material.IRON_INGOT))
                     {
+                        if (SlardcraftPlugin.DEBUG) Bukkit.broadcastMessage("DESTROYED IRON DROP FROM IRON GOLEM");
                         iterator.remove();  
                     }
                 }
             }
         }
     }
+
+    @EventHandler
+    public void disableZombiePiglinGoldDrop(EntityDeathEvent event) {
+        if (event.getEntity() instanceof PigZombie) {            
+            Iterator<ItemStack> iterator = event.getDrops().iterator();
+            while(iterator.hasNext())
+            {
+                ItemStack item = iterator.next();
+                if(item.getType().equals(Material.GOLD_NUGGET) || item.getType().equals(Material.GOLD_INGOT))
+                {
+                    if (SlardcraftPlugin.DEBUG) Bukkit.broadcastMessage("DESTROYED GOLD DROP FROM ZOMBIE PIGLIN");
+                    iterator.remove();  
+                }
+            }
+            
+        }
+    }
+
+    @EventHandler
+    public void sanitizePiglinBarter(PiglinBarterEvent event) {
+        List<ItemStack> isList = event.getOutcome();
+        for (ItemStack is : isList) {
+            if (SlardcraftPlugin.DEBUG) Bukkit.broadcastMessage("Sanitizing barter from piglin.");
+            sanitizeItemStack(is);
+        }
+    }
+
     @EventHandler
     public void sanitizeEnchantments(PrepareItemEnchantEvent event) {
         if (BANNED_ENCHANT_SET.contains(event.getItem().getType())) {
@@ -120,8 +155,42 @@ public class MyListener implements Listener {
     public void sanitizeAnvil(PrepareAnvilEvent event) {
         if (BANNED_ENCHANT_SET.contains(event.getResult().getType())) {
             event.setResult(null);
+            return;
+        }
+        if (BigOre.oreSet.contains(event.getResult().getType())) {
+            if (event.getResult().getItemMeta().getLocalizedName().equals("mega") || event.getResult().getItemMeta().getLocalizedName().equals("big")) {
+                event.setResult(null);
+                return;
+            }
+        }
+        if (PlayerFoodListener.meatSet.contains((event.getResult().getType()))) {
+            if (event.getResult().getItemMeta().getLocalizedName().equals("seasoned")) {
+                event.setResult(null);
+                return;
+            }
+        }
+        if (event.getResult().getType().equals(Material.SUGAR)) {
+            if (event.getResult().getItemMeta().getLocalizedName().equals("fancy_sugar")) {
+                event.setResult(null);
+                return;
+            }
+        }
+        if (event.getResult().getType().equals(Material.COOKIE)) {
+            if (event.getResult().getItemMeta().getLocalizedName().equals("fancy_cookie")) {
+                event.setResult(null);
+                return;
+            }
         }
     }
+
+    // TODO may have to be more complex with diamond coated iron pickaxe
+    @EventHandler
+    public void sanitizeSmithingTable(PrepareSmithingEvent event) {
+        if (BANNED_ENCHANT_SET.contains(event.getResult().getType())) {
+            event.setResult(null);
+        }
+    }
+
 
     @EventHandler
     public void sanitizeVillager(VillagerAcquireTradeEvent event) {
@@ -154,7 +223,7 @@ public class MyListener implements Listener {
     }
 
     @EventHandler
-    public void sanitizeInventoryEvent(InventoryOpenEvent event) {
+    public void sanitizeInventoryOpenEvent(InventoryOpenEvent event) {
         Inventory inv = event.getInventory();
         Iterator<ItemStack> ii = inv.iterator();
         if (SlardcraftPlugin.DEBUG) Bukkit.broadcastMessage("Attempting Sanitization on inventory.");
@@ -167,6 +236,9 @@ public class MyListener implements Listener {
     //Hypothetically, not neccessary if everything else is cleaned up. a catch all for pickups. Maybe could use a catch all for inventory dragins,.. no such thing kind of.
     @EventHandler
     public void sanitizePlayerPickups(EntityPickupItemEvent event) {
+        if (!event.getEntityType().equals(EntityType.PLAYER)) {
+            return;
+        }
         Item item = event.getItem();
         if (SlardcraftPlugin.DEBUG) Bukkit.broadcastMessage("Attempting Sanitization on: " + event.toString());
         sanitizeItemStack(item.getItemStack());
@@ -174,7 +246,6 @@ public class MyListener implements Listener {
 
     @EventHandler
     public void bigYieldOres(BlockDropItemEvent event) {
-        // if (SlardcraftPlugin.DEBUG) Bukkit.broadcastMessage("Block drop item: " + event.getItems());
         Map<Material, Material> BIG_YIELD_ORE_MAP = Map.ofEntries(
             entry(Material.DEEPSLATE_DIAMOND_ORE, Material.DIAMOND),
             entry(Material.DIAMOND_ORE, Material.DIAMOND),
@@ -189,7 +260,6 @@ public class MyListener implements Listener {
         if (SlardcraftPlugin.DEBUG) Bukkit.broadcastMessage("Block state type: " + bs.getType());
         if (BIG_YIELD_ORE_SET.contains(bs.getType())) {
             Random rand = new Random();
-            // if (SlardcraftPlugin.DEBUG) Bukkit.broadcastMessage("Block drop item MATCH.");
             List<Item> items = event.getItems();
             for(Item i : items) {
                 float r = rand.nextFloat();
@@ -201,14 +271,17 @@ public class MyListener implements Listener {
                     case 1:
                     //big
                         if (SlardcraftPlugin.DEBUG) Bukkit.broadcastMessage("BEEG");
-                        ItemStack bigOre = new ItemStack(BIG_YIELD_ORE_MAP.get(bs.getType()), 3);
+                        ItemStack bigOre = BigOre.getBigOre(BIG_YIELD_ORE_MAP.get(bs.getType()));
                         i.setItemStack(bigOre);
                         break;
                     case 2:
                     //mega
                         if (SlardcraftPlugin.DEBUG) Bukkit.broadcastMessage("MEGA");
-                        if (bs.getType().equals(Material.DIAMOND)) Bukkit.broadcastMessage("" + event.getPlayer().getName() + " just got a MEGA DIAMOND.");
-                        ItemStack megaOre = new ItemStack(BIG_YIELD_ORE_MAP.get(bs.getType()), 9);
+                        if (bs.getType().equals(Material.DIAMOND_ORE) || bs.getType().equals(Material.DEEPSLATE_DIAMOND_ORE)) {
+                            Bukkit.broadcastMessage("" + event.getPlayer().getName() + " just mined a " + BigOre.oreMap.get(Material.DIAMOND).color + ChatColor.BOLD + "MEGA DIAMOND" + ChatColor.RESET + "!");
+                            //play sound for all players
+                        }
+                        ItemStack megaOre = BigOre.getMegaOre(BIG_YIELD_ORE_MAP.get(bs.getType()));
                         i.setItemStack(megaOre);
                         break;
                 }
@@ -220,9 +293,11 @@ public class MyListener implements Listener {
     private int normalBigOrMega(float chance) {
         if (SlardcraftPlugin.DEBUG) Bukkit.broadcastMessage("FLOAT CHANCE: " + chance);
         if (chance <= .01) {
+            //1% chance of mega
             return 2;
         }
         if (chance <= .11) {
+            //10% chance of big
             return 1;
         }
         return 0;

@@ -15,9 +15,12 @@ import static java.util.Map.entry;
 import org.bukkit.Bukkit;
 import org.bukkit.GameRule;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.World;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.SmithingRecipe;
 
 public class SlardcraftPlugin extends JavaPlugin {
@@ -27,6 +30,7 @@ public class SlardcraftPlugin extends JavaPlugin {
     public static boolean DEBUG = true;
     public static Map<Material, Material> BANNED_CRAFT_MAP = Map.ofEntries(
             entry(Material.DIAMOND_AXE, Material.IRON_AXE),
+            entry(Material.DIAMOND_BOOTS, Material.IRON_BOOTS),
             entry(Material.DIAMOND_CHESTPLATE, Material.IRON_CHESTPLATE),
             entry(Material.DIAMOND_HELMET, Material.IRON_HELMET), 
             entry(Material.DIAMOND_HOE, Material.IRON_HOE),
@@ -52,11 +56,14 @@ public class SlardcraftPlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        getServer().getPluginManager().registerEvents(new MyListener(), this);
         Bukkit.getWorld("world").setGameRule(GameRule.PLAYERS_SLEEPING_PERCENTAGE, 50);
         Bukkit.getWorld("world").setGameRule(GameRule.ANNOUNCE_ADVANCEMENTS, false);
         Bukkit.getWorld("world").setGameRule(GameRule.DISABLE_ELYTRA_MOVEMENT_CHECK, true);
         sanitizeRecipes();
+        addRecipes();
+        getServer().getPluginManager().registerEvents(new MyListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerFoodListener(), this);
+        if (SlardcraftPlugin.DEBUG) this.getCommand("cheat").setExecutor(new CheatCommand());
     }
 
     // Fired when plugin is disabled
@@ -77,6 +84,30 @@ public class SlardcraftPlugin extends JavaPlugin {
             if (recipe instanceof ShapedRecipe && SlardcraftPlugin.BANNED_CRAFT_SET.contains(recipe.getResult().getType()))
                 recipes.remove();
         }
+    }
+
+    private void addRecipes() {
+        
+        Recipe bigIronBreakDownRecipe = BigOre.getBigOreBreakDownRecipe(new NamespacedKey(this, "big_iron"), Material.RAW_IRON);
+        Recipe megaIronBreakDownRecipe = BigOre.getMegaOreBreakDownRecipe(new NamespacedKey(this, "mega_iron"), Material.RAW_IRON);
+        Recipe bigGoldBreakDownRecipe = BigOre.getBigOreBreakDownRecipe(new NamespacedKey(this, "big_gold"), Material.RAW_GOLD);
+        Recipe megaGoldBreakDownRecipe = BigOre.getMegaOreBreakDownRecipe(new NamespacedKey(this, "mega_gold"), Material.RAW_GOLD);
+        Recipe bigDiamondBreakDownRecipe = BigOre.getBigOreBreakDownRecipe(new NamespacedKey(this, "big_diamond"), Material.DIAMOND);
+        Recipe megaDiamondBreakDownRecipe = BigOre.getMegaOreBreakDownRecipe(new NamespacedKey(this, "mega_diamond"), Material.DIAMOND);
+        Recipe[] bigOreRecipes = {
+            bigIronBreakDownRecipe,
+            megaIronBreakDownRecipe,
+            bigGoldBreakDownRecipe,
+            megaGoldBreakDownRecipe,
+            bigDiamondBreakDownRecipe,
+            megaDiamondBreakDownRecipe};
+        for (Recipe r : bigOreRecipes) {
+            getServer().addRecipe(r);
+        }
+        getServer().addRecipe(PlayerFoodListener.getSeasonedMeatRecipe(new NamespacedKey(this, "seasoned_steak"), Material.COOKED_BEEF));
+        getServer().addRecipe(PlayerFoodListener.getSeasonedMeatRecipe(new NamespacedKey(this, "seasoned_porkchop"), Material.COOKED_PORKCHOP));
+        getServer().addRecipe(PlayerFoodListener.getFancySugarRecipe(new NamespacedKey(this, "fancy_sugar")));
+        getServer().addRecipe(PlayerFoodListener.getFancyCookieRecipe(new NamespacedKey(this, "fancy_cookie")));
     }
 
 }
