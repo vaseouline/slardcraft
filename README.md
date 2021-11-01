@@ -44,12 +44,18 @@ TESTED:
 -remove ability to rename big,mega ore and seasoned meats. they rely on checking if the item meta data is the same for the crafting and eating properties
 -New Recipe for custom sugar. Used for haste potion and haste cookie. made of 1diamond and 3 sugar to yield 4 fancy sugar.
 -New Recipe for fancy cookie. Uses custom sugar to give 22.5s of haste1 for 1 cookie. recipe gives 8 cookies
+-the new diamond pickaxe can maintain the durability of the iron pickaxe inside of it's metadata
+-Diamond coated iron pickaxe in smithing table, created in upgrade thing with a new iron pickaxe. 10 durability diamond pickaxe, drops iron pickaxe on breaking. Maybe try to preserve iron durability before and after diamond coating wears
+-Remove sanitization for coated pickaxes. 
+-Gotta set destory item event for coated pickaxe
+-remove repair diamond pick axe....
+
 UNTESTED:
 
-TODO:
 
--Diamond coated iron pickaxe in smithing table, created in upgrade thing with a new iron pickaxe. 10 durability diamond pickaxe, drops iron pickaxe on breaking. Maybe try to preserve iron durability before and after diamond coating wears
--New potion of haste with all of the variants. Follow timings for other potions.
+TODO:
+-wiki with patch notes
+
 
 
 NEVERMINDS:
@@ -70,6 +76,10 @@ V1.1 Polish existing features And Add currencyness:
 -hero of the village sound for all players when a mega diamond is mined.
 -breakdown anvil sound when crafting broken diamond and ore. also grants exp.
 -New bong water potion. brew grass or tall grass, all variants including lingering for hotboxing, for potion of nausea
+-New potion of haste with all of the variants. Follow timings for other potions.
+--For now may be easier to modify speed potion with fancy sugar in crafting table. kind of sucks but it is what it is. We can just make the haste 1/2 and long variant for solo use.
+--or possibly cookies are good enough? might make potions a 1.1 feature
+-readd repair of vanilla and legal items in anvil
 
 v1.2 New PVP features
 -Duel mode. Wager a bet. Tax one diamond. Don't lose inv on death. Respawn on point of death.
@@ -81,9 +91,11 @@ v1.2 New PVP features
 -scoreboard always see diplomats gold and anyone else who has a bounty and their bounty
 -diplomat rate of interest is faster the closer you are to 0:0
 
+
 Thoughts:
 -Running tally of turned in diamonds. Each turned in diamond yields x11gold
 -Can convert 20g to 1d
 -evil diamond?
 -potion cooldown system?
 -consider bounding the world 10,000 radius and pre-rendering the world
+-Sanitize itemMeta as well, not just enchantments?
