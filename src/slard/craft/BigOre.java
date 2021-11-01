@@ -53,6 +53,7 @@ public class BigOre {
     public static Recipe getBigOreBreakDownRecipe(NamespacedKey nms, Material ore) {
         if (!oreMap.containsKey(ore)) {
             if (SlardcraftPlugin.DEBUG) Bukkit.broadcastMessage("ERROR: UNEXPECTED BIG ORE MATERIAL: " + ore.toString());
+            throw new IllegalArgumentException();
         }
         ItemStack output = new ItemStack(ore);
         output.setAmount(BIG_COUNT);
@@ -66,6 +67,7 @@ public class BigOre {
     public static Recipe getMegaOreBreakDownRecipe(NamespacedKey nms, Material ore) {
         if (!oreMap.containsKey(ore)) {
             if (SlardcraftPlugin.DEBUG) Bukkit.broadcastMessage("ERROR: UNEXPECTED BIG ORE MATERIAL: " + ore.toString());
+            throw new IllegalArgumentException();
         }
         ItemStack output = getBigOre(ore);
         output.setAmount(BIG_COUNT);
@@ -79,6 +81,7 @@ public class BigOre {
     public static ItemStack getBigOre(Material ore) {
         if (!oreMap.containsKey(ore)) {
             if (SlardcraftPlugin.DEBUG) Bukkit.broadcastMessage("ERROR: UNEXPECTED BIG ORE MATERIAL: " + ore.toString());
+            throw new IllegalArgumentException();
         }
         ItemStack is = new ItemStack(ore);
         ItemMeta isMeta = is.getItemMeta();
@@ -91,6 +94,7 @@ public class BigOre {
     public static ItemStack getMegaOre(Material ore) {
         if (!oreMap.containsKey(ore)) {
             if (SlardcraftPlugin.DEBUG) Bukkit.broadcastMessage("ERROR: UNEXPECTED MEGA ORE MATERIAL: " + ore.toString());
+            throw new IllegalArgumentException();
         }
         ItemStack is = new ItemStack(ore);
         ItemMeta isMeta = is.getItemMeta();

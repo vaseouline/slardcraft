@@ -21,7 +21,8 @@ public class CheatCommand implements CommandExecutor {
                     PlayerFoodListener.getSeasonedMeat(Material.COOKED_BEEF),
                     PlayerFoodListener.getSeasonedMeat(Material.COOKED_PORKCHOP),
                     PlayerFoodListener.getFancyCookie(),
-                    PlayerFoodListener.getFancySugar());
+                    PlayerFoodListener.getFancySugar(),
+                    CoatedPickaxe.getCoatedPickaxe(new ItemStack(Material.IRON_PICKAXE)));
             player.setHealth(10);
             player.setFoodLevel(1);
             player.setSaturation(1);

@@ -63,6 +63,7 @@ public class SlardcraftPlugin extends JavaPlugin {
         addRecipes();
         getServer().getPluginManager().registerEvents(new MyListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerFoodListener(), this);
+        getServer().getPluginManager().registerEvents(new SmithingListener(), this);
         if (SlardcraftPlugin.DEBUG) this.getCommand("cheat").setExecutor(new CheatCommand());
     }
 
@@ -81,7 +82,9 @@ public class SlardcraftPlugin extends JavaPlugin {
                 continue;
             }
 
-            if (recipe instanceof ShapedRecipe && SlardcraftPlugin.BANNED_CRAFT_SET.contains(recipe.getResult().getType()))
+            //TODO this may be too strong. what about recipes from traders? should they result in null trades?
+            // also doesn't seem to work for repairssss
+            if (SlardcraftPlugin.BANNED_CRAFT_SET.contains(recipe.getResult().getType()))
                 recipes.remove();
         }
     }
@@ -108,6 +111,7 @@ public class SlardcraftPlugin extends JavaPlugin {
         getServer().addRecipe(PlayerFoodListener.getSeasonedMeatRecipe(new NamespacedKey(this, "seasoned_porkchop"), Material.COOKED_PORKCHOP));
         getServer().addRecipe(PlayerFoodListener.getFancySugarRecipe(new NamespacedKey(this, "fancy_sugar")));
         getServer().addRecipe(PlayerFoodListener.getFancyCookieRecipe(new NamespacedKey(this, "fancy_cookie")));
+        getServer().addRecipe(CoatedPickaxe.getDiamondCoatedPickaxeRecipe(new NamespacedKey(this, "coated_pickaxe")));
     }
 
 }

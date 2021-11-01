@@ -34,9 +34,11 @@ import org.bukkit.event.entity.VillagerAcquireTradeEvent;
 import org.bukkit.event.inventory.InventoryEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
+import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.event.inventory.PrepareSmithingEvent;
 import org.bukkit.event.server.BroadcastMessageEvent;
 import org.bukkit.event.world.LootGenerateEvent;
+import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.MerchantRecipe;
@@ -95,6 +97,7 @@ public class MyListener implements Listener {
         Material.CROSSBOW
     );
     private static Set<Material> BANNED_ENCHANT_SET = new HashSet<>(BANNED_ENCHANT_LIST);
+    
 
     @EventHandler
     public void disableIronGolemIronDrop(EntityDeathEvent event) {
@@ -153,10 +156,13 @@ public class MyListener implements Listener {
 
     @EventHandler
     public void sanitizeAnvil(PrepareAnvilEvent event) {
+        //TODO should set this to allow repairs of vanilla stuff. Currently, built this way to prevent enchantments with book.
         if (BANNED_ENCHANT_SET.contains(event.getResult().getType())) {
             event.setResult(null);
             return;
         }
+
+        //prevent renaming of custom items
         if (BigOre.oreSet.contains(event.getResult().getType())) {
             if (event.getResult().getItemMeta().getLocalizedName().equals("mega") || event.getResult().getItemMeta().getLocalizedName().equals("big")) {
                 event.setResult(null);
@@ -183,15 +189,7 @@ public class MyListener implements Listener {
         }
     }
 
-    // TODO may have to be more complex with diamond coated iron pickaxe
-    @EventHandler
-    public void sanitizeSmithingTable(PrepareSmithingEvent event) {
-        if (BANNED_ENCHANT_SET.contains(event.getResult().getType())) {
-            event.setResult(null);
-        }
-    }
-
-
+    
     @EventHandler
     public void sanitizeVillager(VillagerAcquireTradeEvent event) {
         
@@ -303,8 +301,21 @@ public class MyListener implements Listener {
         return 0;
     }
 
+    @EventHandler
+    public void sanitizeRepair(PrepareItemCraftEvent event) {
+        if (!event.isRepair()) {
+            return;
+        }
+        if (SlardcraftPlugin.DEBUG) Bukkit.broadcastMessage("Repair Event item: " + event.toString());
+        CraftingInventory ci = event.getInventory();
+        if (SlardcraftPlugin.BANNED_CRAFT_SET.contains(ci.getItem(0).getType())) {
+            if (SlardcraftPlugin.DEBUG) Bukkit.broadcastMessage("Repair Event item DENIED: " + ci.getItem(0).getType());
+            ci.setResult(null);
+        }
+    }
+
     public static boolean sanitizeItemStack(ItemStack is) {
-        if (is == null) {
+        if (is == null || isException(is)) {
             return false;
         }
         boolean sanitized = false;
@@ -322,6 +333,13 @@ public class MyListener implements Listener {
             sanitized = true;
         }
         return sanitized;
+    }
+
+    private static boolean isException(ItemStack is) {
+        if (CoatedPickaxe.isCoatedPickaxe(is)) {
+            return true;
+        }
+        return false;
     }
 
 }

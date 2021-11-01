@@ -71,7 +71,8 @@ public class PlayerFoodListener implements Listener {
     public void eatFancyCookie(PlayerItemConsumeEvent event) {
         if (event.getItem().isSimilar(PlayerFoodListener.getFancyCookie())) {
             //duration is in ticks 22.5 seconds x 20 ticks/s = 450
-            PotionEffect haste = new PotionEffect(PotionEffectType.FAST_DIGGING, 450, 1, true, true);
+            //amplifier is 0 for level 1, 1 for level 2
+            PotionEffect haste = new PotionEffect(PotionEffectType.FAST_DIGGING, 450, 0, true, true);
             event.getPlayer().addPotionEffect(haste);
         }
     }
@@ -79,6 +80,7 @@ public class PlayerFoodListener implements Listener {
     public static ItemStack getSeasonedMeat(Material meat) {
         if (!meatMap.containsKey(meat)) {
             if (SlardcraftPlugin.DEBUG) Bukkit.broadcastMessage("ERROR: UNEXPECTED SEASONED MEAT MATERIAL: " + meat.toString());
+            throw new IllegalArgumentException();
         }
         ItemStack is = new ItemStack(meat);
         ItemMeta isMeta = is.getItemMeta();
@@ -91,6 +93,7 @@ public class PlayerFoodListener implements Listener {
     public static Recipe getSeasonedMeatRecipe(NamespacedKey nms, Material meat) {
         if (!meatMap.containsKey(meat)) {
             if (SlardcraftPlugin.DEBUG) Bukkit.broadcastMessage("ERROR: UNEXPECTED SEASONED MEAT MATERIAL: " + meat.toString());
+            throw new IllegalArgumentException();
         }
         ItemStack output = getSeasonedMeat(meat);
         ShapedRecipe recipe = new ShapedRecipe(nms, output);
