@@ -27,7 +27,7 @@ public class SlardcraftPlugin extends JavaPlugin {
     // Map of banned crafting items and their legal counterpart. null if no legal
     // counterpart
 
-    public static boolean DEBUG = true;
+    public static boolean DEBUG = false;
     public static Map<Material, Material> BANNED_CRAFT_MAP = Map.ofEntries(
             entry(Material.DIAMOND_AXE, Material.IRON_AXE),
             entry(Material.DIAMOND_BOOTS, Material.IRON_BOOTS),
@@ -82,8 +82,6 @@ public class SlardcraftPlugin extends JavaPlugin {
                 continue;
             }
 
-            //TODO this may be too strong. what about recipes from traders? should they result in null trades?
-            // also doesn't seem to work for repairssss
             if (SlardcraftPlugin.BANNED_CRAFT_SET.contains(recipe.getResult().getType()))
                 recipes.remove();
         }
