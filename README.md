@@ -49,13 +49,21 @@ TESTED:
 -Remove sanitization for coated pickaxes. 
 -Gotta set destory item event for coated pickaxe
 -remove repair diamond pick axe....
+-bound world size to 3kx3k
+-init.slard instead of play. and play is the ip.
 
 UNTESTED:
-
+-nerf trident actually. maybe only allow riptide
 
 TODO:
--wiki with patch notes
 
+-wiki with patch notes
+--Upload the wiki
+--how to play, and images of recipes still not in
+-test piglin farming. behaves the same as zombified piglin. arg for keeping it in: only yields max of 8 ingots per hour, considering looting 3 and killing efficiently. Cons - mining yields about 8 ingots per hour, 10~ ingots per hour with big. So farming piglins is a viable way to get gold which is really boring. So im incentivizing a really boring way of playing. solution, make mining gold more available by increasing map size...? Ban gold farming from pigs. - more viable in the beginning can readd later.
+-remove mending
+
+-add silk touch 1 to coated pickaxe
 
 
 NEVERMINDS:
@@ -81,6 +89,9 @@ V1.1 Polish existing features And Add currencyness:
 --or possibly cookies are good enough? might make potions a 1.1 feature
 -readd repair of vanilla and legal items in anvil
 
+BUGS:
+-BIG,MEGA ORE NEEDS to replace furnace recipe.
+
 v1.2 New PVP features
 -Duel mode. Wager a bet. Tax one diamond. Don't lose inv on death. Respawn on point of death.
 -firecharge shoot ghastprojectile doesn't blow up dirt but explodes with AOE damage
@@ -99,3 +110,4 @@ Thoughts:
 -potion cooldown system?
 -consider bounding the world 10,000 radius and pre-rendering the world
 -Sanitize itemMeta as well, not just enchantments?
+-Is it possible to make item stack bigger?

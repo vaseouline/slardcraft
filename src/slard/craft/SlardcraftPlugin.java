@@ -56,9 +56,6 @@ public class SlardcraftPlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        Bukkit.getWorld("world").setGameRule(GameRule.PLAYERS_SLEEPING_PERCENTAGE, 50);
-        Bukkit.getWorld("world").setGameRule(GameRule.ANNOUNCE_ADVANCEMENTS, false);
-        Bukkit.getWorld("world").setGameRule(GameRule.DISABLE_ELYTRA_MOVEMENT_CHECK, true);
         sanitizeRecipes();
         addRecipes();
         getServer().getPluginManager().registerEvents(new MyListener(), this);

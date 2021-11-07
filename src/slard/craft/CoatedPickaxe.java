@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
@@ -55,7 +56,7 @@ public class CoatedPickaxe {
         return coatedPickaxe.getItemMeta().getLocalizedName().contains(name);
     }
 
-    static String getCoatedPickaxeMeta(ItemStack ironPickaxe) {
+    static String getCoatedPickaxeMetaString(ItemStack ironPickaxe) {
         if (!ironPickaxe.getType().equals(Material.IRON_PICKAXE) || !(ironPickaxe.getItemMeta() instanceof Damageable)) {
             if (SlardcraftPlugin.DEBUG) Bukkit.broadcastMessage("ERROR: UNEXPECTED ITEM FOR IRON PICKAXE: " + ironPickaxe.toString());
             throw new IllegalArgumentException();
@@ -72,8 +73,10 @@ public class CoatedPickaxe {
         }
         ItemStack is = new ItemStack(Material.DIAMOND_PICKAXE);
         Damageable isMeta = (Damageable) is.getItemMeta();
+        isMeta.addEnchant(Enchantment.SILK_TOUCH, 1, false);
         isMeta.setDisplayName("" +  ChatColor.AQUA + "Coated " + ChatColor.RESET + "Pickaxe");
-        isMeta.setLocalizedName(getCoatedPickaxeMeta(ironPickaxe));
+        isMeta.setLocalizedName(getCoatedPickaxeMetaString(ironPickaxe));
+        
     
         isMeta.setDamage(diamond_pickaxe_max_durability - coatedPickaxeHealth);
         is.setItemMeta(isMeta);

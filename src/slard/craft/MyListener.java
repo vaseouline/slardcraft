@@ -94,7 +94,8 @@ public class MyListener implements Listener {
         Material.CHAINMAIL_LEGGINGS,
         Material.SHIELD,
         Material.BOW,
-        Material.CROSSBOW
+        Material.CROSSBOW,
+        Material.TRIDENT
     );
     private static Set<Material> BANNED_ENCHANT_SET = new HashSet<>(BANNED_ENCHANT_LIST);
     
