@@ -26,8 +26,7 @@ import org.bukkit.inventory.SmithingRecipe;
 public class SlardcraftPlugin extends JavaPlugin {
     // Map of banned crafting items and their legal counterpart. null if no legal
     // counterpart
-
-    public static boolean DEBUG = false;
+    public static boolean DEBUG;
     public static Map<Material, Material> BANNED_CRAFT_MAP = Map.ofEntries(
             entry(Material.DIAMOND_AXE, Material.IRON_AXE),
             entry(Material.DIAMOND_BOOTS, Material.IRON_BOOTS),
@@ -56,6 +55,10 @@ public class SlardcraftPlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        if (System.getenv("SLARD_DEBUG") == null) {
+            DEBUG = false;
+        }
+        DEBUG = Boolean.parseBoolean(System.getenv("SLARD_DEBUG"));
         sanitizeRecipes();
         addRecipes();
         getServer().getPluginManager().registerEvents(new MyListener(), this);

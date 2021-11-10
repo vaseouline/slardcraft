@@ -21,6 +21,7 @@ import org.bukkit.entity.IronGolem;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.PigZombie;
+import org.bukkit.entity.Piglin;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -42,6 +43,7 @@ import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.MerchantRecipe;
+import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 
 public class MyListener implements Listener {
     
@@ -119,16 +121,31 @@ public class MyListener implements Listener {
         }
     }
 
+
+    private static List<Material> GOLD_NUGGETABLE_LIST = Arrays.asList(
+        Material.GOLD_NUGGET,
+        Material.GOLD_INGOT,
+        Material.GOLDEN_AXE, 
+        Material.GOLDEN_BOOTS, 
+        Material.GOLDEN_CHESTPLATE,
+        Material.GOLDEN_HELMET,
+        Material.GOLDEN_HOE,
+        Material.GOLDEN_LEGGINGS,
+        Material.GOLDEN_PICKAXE,
+        Material.GOLDEN_SHOVEL,
+        Material.GOLDEN_SWORD
+    );
+    private static Set<Material> GOLD_NUGGETABLE_SET = new HashSet<>(GOLD_NUGGETABLE_LIST);
     @EventHandler
     public void disableZombiePiglinGoldDrop(EntityDeathEvent event) {
-        if (event.getEntity() instanceof PigZombie) {            
+        if (event.getEntity() instanceof PigZombie || event.getEntity() instanceof Piglin) {            
             Iterator<ItemStack> iterator = event.getDrops().iterator();
             while(iterator.hasNext())
             {
                 ItemStack item = iterator.next();
-                if(item.getType().equals(Material.GOLD_NUGGET) || item.getType().equals(Material.GOLD_INGOT))
+                if(GOLD_NUGGETABLE_SET.contains(item.getType()))
                 {
-                    if (SlardcraftPlugin.DEBUG) Bukkit.broadcastMessage("DESTROYED GOLD DROP FROM ZOMBIE PIGLIN");
+                    if (SlardcraftPlugin.DEBUG) Bukkit.broadcastMessage("DESTROYED " + item.getType().toString() + " FROM " + event.getEntityType().toString());
                     iterator.remove();  
                 }
             }
@@ -333,7 +350,28 @@ public class MyListener implements Listener {
             is.setType(SlardcraftPlugin.BANNED_CRAFT_MAP.get(is.getType()));
             sanitized = true;
         }
+        if (isMending(is)) {
+            if (SlardcraftPlugin.DEBUG) Bukkit.broadcastMessage("replacing mending book with legal item: book");
+            sanitizeEnchantedBook(is);
+            sanitized = true;
+        }
         return sanitized;
+    }
+
+    private static boolean isMending(ItemStack is) {
+        if (is.getType().equals(Material.ENCHANTED_BOOK)) {
+            EnchantmentStorageMeta esm = (EnchantmentStorageMeta) is.getItemMeta();
+            if (esm.hasStoredEnchant(Enchantment.MENDING)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static void sanitizeEnchantedBook(ItemStack is) {
+        is.setType(Material.BOOK);
+        ItemStack book = new ItemStack(Material.BOOK);
+        is.setItemMeta(book.getItemMeta());
     }
 
     private static boolean isException(ItemStack is) {
