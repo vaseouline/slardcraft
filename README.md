@@ -66,11 +66,19 @@ UNTESTED:
 
 TODO:
 v1.2 New PVP features - diplomat feature
--figure out commands, /diplomat, just prints out default diplomat information for now. anybody can use this.
+-figure out commands, /diplomat, just prints out default diplomat information for now. anybody can use this. prints your diplomat status
+-/diplomat initiate, checks if doesn't have a role. then checks if has 3 diamonds with normal metadata, and 9gi with normal meta data or gold equivalent
+-read file, preserve game state in gamestate class object that contains all players information
+-save file on turn off and reload
+-disable end in game settings
+-No longer doing diplomat. Doing butter embryo concept
 
 
 
 
+
+Diplomat Neverminds
+-diplomat rate of interest is faster the closer you are to 0:0. No longer needed due to limited map size.
 Diplomat Idea:
 -Diplomats get access to king's location
 -king gets location of other diplomats
@@ -100,11 +108,11 @@ interest they will get at the end of the window. interest always rounds down to 
 -diplomat speech for good natured fun.
 -need a db or something to preserve state between server shutdowns - will use a file
 -https://www.spigotmc.org/wiki/save-load-data-files/ no random backups needed......
-
-
-
-Diplomat Neverminds
--diplomat rate of interest is faster the closer you are to 0:0. No longer needed due to limited map size.
+-https://hub.spigotmc.org/javadocs/spigot/org/bukkit/scheduler/BukkitScheduler.html#runTaskLater(org.bukkit.plugin.Plugin,java.util.function.Consumer,long) for scheduling a timer of sorts to do window. can also keep track with events since last window close
+-active diplomats and kings get each other's location at the end of each window
+-active diplomats means earning interest at the end of current window. reserved diplomat is not, from logging back in most likely
+-diplomats can take sabbaticals which allows them to return to normal gameplay.
+-when they rejoin diplomacy, they play for free.
 
 
 

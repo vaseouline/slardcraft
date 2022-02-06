@@ -1,8 +1,14 @@
 name: SlardcraftPlugin
 main: slard.craft.SlardcraftPlugin
 version: 1.0
-api-version: 1.17
+api-version: 1.18
 commands:
   cheat:
-      description: Cheat command for jacob only
+      description: Cheat command for debugging. (Debug mode only)
+      usage: /<command>
+  slard:
+      description: notifies user that slard plugin is enabled
+      usage: /<command>
+  renounce:
+      description: renounces buttered soul status
       usage: /<command>

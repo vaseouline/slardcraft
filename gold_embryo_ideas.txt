@@ -1,0 +1,9 @@
+New Ideas:
+- 
+
+Changes:
+-No more diplomat
+-only one commands: renounce - renounces butter status, 
+-build gameplay for townie first
+-https://hub.spigotmc.org/javadocs/spigot/org/bukkit/event/player/PlayerMoveEvent.html used to detect when player is in wildies or in town. 
+-- if a townie in wildies, begin taking damage.
