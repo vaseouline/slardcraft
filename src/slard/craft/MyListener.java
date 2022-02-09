@@ -25,6 +25,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockDropItemEvent;
+import org.bukkit.event.enchantment.EnchantItemEvent;
 import org.bukkit.event.enchantment.PrepareItemEnchantEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityPickupItemEvent;
@@ -41,79 +42,38 @@ import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 
 public class MyListener implements Listener {
     
-    private static List<Material> BANNED_ENCHANT_LIST = Arrays.asList(
+    private static List<Material> BANNED_ENCHANTED_MELEE_LIST = Arrays.asList(
         Material.DIAMOND_AXE, 
-        Material.DIAMOND_BOOTS, 
-        Material.DIAMOND_CHESTPLATE,
-        Material.DIAMOND_HELMET,
-        Material.DIAMOND_HOE,
-        Material.DIAMOND_LEGGINGS,
-        Material.DIAMOND_PICKAXE,
-        Material.DIAMOND_SHOVEL,
         Material.DIAMOND_SWORD,
         Material.NETHERITE_AXE, 
-        Material.NETHERITE_BOOTS, 
-        Material.NETHERITE_CHESTPLATE,
-        Material.NETHERITE_HELMET,
-        Material.NETHERITE_HOE,
-        Material.NETHERITE_LEGGINGS,
-        Material.NETHERITE_PICKAXE,
-        Material.NETHERITE_SHOVEL,
         Material.NETHERITE_SWORD,
-        Material.ELYTRA,
         Material.STONE_AXE, 
-        Material.STONE_HOE,
-        Material.STONE_PICKAXE,
-        Material.STONE_SHOVEL,
         Material.STONE_SWORD,
         Material.GOLDEN_AXE, 
-        Material.GOLDEN_BOOTS, 
-        Material.GOLDEN_CHESTPLATE,
-        Material.GOLDEN_HELMET,
-        Material.GOLDEN_HOE,
-        Material.GOLDEN_LEGGINGS,
-        Material.GOLDEN_PICKAXE,
-        Material.GOLDEN_SHOVEL,
         Material.GOLDEN_SWORD,
         Material.IRON_AXE, 
-        Material.IRON_BOOTS, 
-        Material.IRON_CHESTPLATE,
-        Material.IRON_HELMET,
-        Material.IRON_HOE,
-        Material.IRON_LEGGINGS,
-        Material.IRON_PICKAXE,
-        Material.IRON_SHOVEL,
-        Material.IRON_SWORD,
-        Material.CHAINMAIL_BOOTS,
-        Material.CHAINMAIL_CHESTPLATE,
-        Material.CHAINMAIL_HELMET,
-        Material.CHAINMAIL_LEGGINGS,
-        Material.SHIELD,
-        Material.BOW,
-        Material.CROSSBOW,
-        Material.TRIDENT
-    );
-    private static Set<Material> BANNED_ENCHANT_SET = new HashSet<>(BANNED_ENCHANT_LIST);
-    
+        Material.IRON_SWORD
 
-    @EventHandler
-    public void disableIronGolemIronDrop(EntityDeathEvent event) {
-        if (event.getEntity() instanceof IronGolem) {
-            IronGolem ig = (IronGolem) event.getEntity();
-            if (!ig.isPlayerCreated()) {
-                Iterator<ItemStack> iterator = event.getDrops().iterator();
-                while(iterator.hasNext())
-                {
-                    ItemStack item = iterator.next();
-                    if(item.getType().equals(Material.IRON_INGOT))
-                    {
-                        if (SlardcraftPlugin.DEBUG) Bukkit.broadcastMessage("DESTROYED IRON DROP FROM IRON GOLEM");
-                        iterator.remove();  
-                    }
-                }
-            }
-        }
-    }
+    );
+    private static Set<Material> BANNED_ENCHANTED_MELEE_SET = new HashSet<>(BANNED_ENCHANTED_MELEE_LIST);
+
+
+    private static List<Material> PICKAXES_LIST = Arrays.asList(
+        Material.DIAMOND_PICKAXE,
+        Material.NETHERITE_PICKAXE,
+        Material.STONE_PICKAXE,
+        Material.GOLDEN_PICKAXE,
+        Material.IRON_PICKAXE
+    );
+    private static Set<Material> PICKAXES_SET = new HashSet<>(PICKAXES_LIST);
+
+    private static List<Material> MISC_LIST = Arrays.asList(
+    Material.SHIELD,
+    Material.BOW,
+    Material.CROSSBOW,
+    Material.TRIDENT,
+    Material.ELYTRA
+    );
 
 
     private static List<Material> GOLD_NUGGETABLE_LIST = Arrays.asList(
@@ -156,31 +116,42 @@ public class MyListener implements Listener {
         }
     }
 
+    // TODO for pickaxes first, then do it on anvil as well, and sanitize item stack
     @EventHandler
-    public void sanitizeEnchantments(PrepareItemEnchantEvent event) {
-        if (BANNED_ENCHANT_SET.contains(event.getItem().getType())) {
+    public void sanitizeEnchantmentTable(PrepareItemEnchantEvent event) {
+        // Makes enchantments dissappear for melee weapons
+        if (BANNED_ENCHANTED_MELEE_SET.contains(event.getItem().getType())) {
             EnchantmentOffer[] eo = event.getOffers();
             for (int i = 0; i < eo.length; i++) {
                 eo[i] = null;
             }
+            return;
+        }
+        if (PICKAXES_SET.contains(event.getItem().getType())) {
+            EnchantmentOffer[] eo = event.getOffers();
+            for (int i = 0; i < eo.length; i++) {
+                if (eo[i].getEnchantment() == Enchantment.LOOT_BONUS_BLOCKS) {
+                    eo[i] = null;
+                }
+            }
+            return;
         }
     }
 
     @EventHandler
+    public void sanitizeEnchantmentCompletion(EnchantItemEvent event) {
+        Map<Enchantment, Integer> enchants = event.getEnchantsToAdd();
+        enchants.remove(Enchantment.LOOT_BONUS_BLOCKS);
+    }
+
+    @EventHandler
     public void sanitizeAnvil(PrepareAnvilEvent event) {
-        //TODO should set this to allow repairs of vanilla stuff. Currently, built this way to prevent enchantments with book.
-        if (BANNED_ENCHANT_SET.contains(event.getResult().getType())) {
+        if (BANNED_ENCHANTED_MELEE_SET.contains(event.getResult().getType())) {
             event.setResult(null);
             return;
         }
 
         //prevent renaming of custom items
-        if (BigOre.oreSet.contains(event.getResult().getType())) {
-            if (event.getResult().getItemMeta().getLocalizedName().equals("mega") || event.getResult().getItemMeta().getLocalizedName().equals("big")) {
-                event.setResult(null);
-                return;
-            }
-        }
         if (PlayerFoodListener.meatSet.contains((event.getResult().getType()))) {
             if (event.getResult().getItemMeta().getLocalizedName().equals("seasoned")) {
                 event.setResult(null);
@@ -252,78 +223,6 @@ public class MyListener implements Listener {
         Item item = event.getItem();
         if (SlardcraftPlugin.DEBUG) Bukkit.broadcastMessage("Attempting Sanitization on: " + event.toString());
         sanitizeItemStack(item.getItemStack());
-    }   
-
-    @EventHandler
-    public void bigYieldOres(BlockDropItemEvent event) {
-        Map<Material, Material> BIG_YIELD_ORE_MAP = Map.ofEntries(
-            entry(Material.DEEPSLATE_DIAMOND_ORE, Material.DIAMOND),
-            entry(Material.DIAMOND_ORE, Material.DIAMOND),
-            entry(Material.DEEPSLATE_GOLD_ORE, Material.RAW_GOLD),
-            entry(Material.GOLD_ORE, Material.RAW_GOLD),
-            entry(Material.DEEPSLATE_IRON_ORE, Material.RAW_IRON),
-            entry(Material.IRON_ORE, Material.RAW_IRON)
-            
-        );
-        Set<Material> BIG_YIELD_ORE_SET = BIG_YIELD_ORE_MAP.keySet();
-        BlockState bs = event.getBlockState();
-        if (SlardcraftPlugin.DEBUG) Bukkit.broadcastMessage("Block state type: " + bs.getType());
-        if (BIG_YIELD_ORE_SET.contains(bs.getType())) {
-            Random rand = new Random();
-            List<Item> items = event.getItems();
-            for(Item i : items) {
-                float r = rand.nextFloat();
-                switch(normalBigOrMega(r)) {
-                    case 0:
-                    //normal
-                        if (SlardcraftPlugin.DEBUG) Bukkit.broadcastMessage("NORMAL");
-                        break;
-                    case 1:
-                    //big
-                        if (SlardcraftPlugin.DEBUG) Bukkit.broadcastMessage("BEEG");
-                        ItemStack bigOre = BigOre.getBigOre(BIG_YIELD_ORE_MAP.get(bs.getType()));
-                        i.setItemStack(bigOre);
-                        break;
-                    case 2:
-                    //mega
-                        if (SlardcraftPlugin.DEBUG) Bukkit.broadcastMessage("MEGA");
-                        if (bs.getType().equals(Material.DIAMOND_ORE) || bs.getType().equals(Material.DEEPSLATE_DIAMOND_ORE)) {
-                            Bukkit.broadcastMessage("" + event.getPlayer().getName() + " just mined a " + BigOre.oreMap.get(Material.DIAMOND).color + ChatColor.BOLD + "MEGA DIAMOND" + ChatColor.RESET + "!");
-                            //play sound for all players
-                        }
-                        ItemStack megaOre = BigOre.getMegaOre(BIG_YIELD_ORE_MAP.get(bs.getType()));
-                        i.setItemStack(megaOre);
-                        break;
-                }
-            }
-        }
-    }
-
-
-    private int normalBigOrMega(float chance) {
-        if (SlardcraftPlugin.DEBUG) Bukkit.broadcastMessage("FLOAT CHANCE: " + chance);
-        if (chance <= .01) {
-            //1% chance of mega
-            return 2;
-        }
-        if (chance <= .11) {
-            //10% chance of big
-            return 1;
-        }
-        return 0;
-    }
-
-    @EventHandler
-    public void sanitizeRepair(PrepareItemCraftEvent event) {
-        if (!event.isRepair()) {
-            return;
-        }
-        if (SlardcraftPlugin.DEBUG) Bukkit.broadcastMessage("Repair Event item: " + event.toString());
-        CraftingInventory ci = event.getInventory();
-        if (SlardcraftPlugin.BANNED_CRAFT_SET.contains(ci.getItem(0).getType())) {
-            if (SlardcraftPlugin.DEBUG) Bukkit.broadcastMessage("Repair Event item DENIED: " + ci.getItem(0).getType());
-            ci.setResult(null);
-        }
     }
 
     public static boolean sanitizeItemStack(ItemStack is) {
@@ -332,7 +231,7 @@ public class MyListener implements Listener {
         }
         boolean sanitized = false;
         if (SlardcraftPlugin.DEBUG) Bukkit.broadcastMessage("Original item: " + is.toString());
-        if (BANNED_ENCHANT_SET.contains(is.getType())) {
+        if (BANNED_ENCHANTED_MELEE_SET.contains(is.getType())) {
             for(Enchantment e : is.getEnchantments().keySet()){
                 is.removeEnchantment(e);
                 if (SlardcraftPlugin.DEBUG) Bukkit.broadcastMessage("removing enchants from item: " + e.toString());
@@ -344,34 +243,10 @@ public class MyListener implements Listener {
             is.setType(SlardcraftPlugin.BANNED_CRAFT_MAP.get(is.getType()));
             sanitized = true;
         }
-        if (isMending(is)) {
-            if (SlardcraftPlugin.DEBUG) Bukkit.broadcastMessage("replacing mending book with legal item: book");
-            sanitizeEnchantedBook(is);
-            sanitized = true;
-        }
         return sanitized;
     }
 
-    private static boolean isMending(ItemStack is) {
-        if (is.getType().equals(Material.ENCHANTED_BOOK)) {
-            EnchantmentStorageMeta esm = (EnchantmentStorageMeta) is.getItemMeta();
-            if (esm.hasStoredEnchant(Enchantment.MENDING)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private static void sanitizeEnchantedBook(ItemStack is) {
-        is.setType(Material.BOOK);
-        ItemStack book = new ItemStack(Material.BOOK);
-        is.setItemMeta(book.getItemMeta());
-    }
-
     private static boolean isException(ItemStack is) {
-        if (CoatedPickaxe.isCoatedPickaxe(is)) {
-            return true;
-        }
         return false;
     }
 

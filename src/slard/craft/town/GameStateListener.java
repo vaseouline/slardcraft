@@ -2,10 +2,16 @@ package slard.craft.town;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World.Environment;
+import org.bukkit.block.Block;
+import org.bukkit.block.data.type.Bed;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.player.PlayerBedEnterEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
@@ -67,8 +73,8 @@ public class GameStateListener implements Listener {
           task.cancel();
           ps.hasDmgTask = false;
         }
-        event.getPlayer().damage(1);
-      }, 20, 20 /* 1s */);
+        event.getPlayer().damage(3);
+      }, 20 * 1, 20 * 2 /* 1s 2s */);
       ps.hasDmgTask = true;
     }
     
@@ -98,5 +104,30 @@ public class GameStateListener implements Listener {
     return false;
   }
 
+  @EventHandler
+  public void preventBuildOnBorder(BlockPlaceEvent event) {
+    int x = event.getBlock().getX();
+    int z = event.getBlock().getZ();
+    // weirdness requires negative number to subtract 2
+    if (x == WORLD_RADIUS + 1 || x == WORLD_RADIUS*-1 - 2 || z == WORLD_RADIUS + 1 || z == WORLD_RADIUS*-1 - 2) {
+      event.setCancelled(true);
+    }
+  }
+
+  @EventHandler
+  public void preventOutdoorSleep(PlayerInteractEvent event) {
+    if (event.getPlayer().getLocation().getWorld().getEnvironment() != Environment.NORMAL) {
+      return;
+    }
+    if (!event.getClickedBlock().getType().toString().contains("BED")) {
+      return;
+    }
+    if (!inTown(event.getPlayer().getLocation())) {
+      event.setCancelled(true);
+      event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("Can only sleep within the border."));
+    }
+  }
+
 
 }
+

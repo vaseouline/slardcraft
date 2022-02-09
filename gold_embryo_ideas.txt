@@ -1,9 +1,78 @@
-New Ideas:
-- 
 
-Changes:
--No more diplomat
--only one commands: renounce - renounces butter status, 
--build gameplay for townie first
--https://hub.spigotmc.org/javadocs/spigot/org/bukkit/event/player/PlayerMoveEvent.html used to detect when player is in wildies or in town. 
--- if a townie in wildies, begin taking damage.
+TODO:
+-limit sword and axe to iron max
+- limit enchants for sword and axe to just wooden sword and axe
+-come up with list of acceptable enchantments for bow and crossbow and trident and shield
+-allow smithing netherite gear
+
+
+
+For Townie/General:
+-Make all armor enchantable and creatable... - make sure this is done.
+-review mylistener.java to figure out how to enchant special cases, like weapons...
+-add change command. drops player a few gold nuggets, and can be called only once per minecraft day, should also say a random thing in the player's perspective from a pool of things. "I am v poor. Can some spare some change? I promise I won't spend it on fancy cookies." "Help! Family was kidnapped by herobrine. I need 3gb and 3gn to afford karate lessons to save my family!" "Oinky-doinky, me's poor and stinky. Can anybody feed me, uwu?" 
+-pvp off in town. even for buttered? not sure. I think using town as a battle ground for buttered seems really fun.
+-keep cookie
+- Should add player moveportal event, for returning to town safely updating it instantly, bc rn player continues to take dmg until he moves
+-prevent block placement on worldborder+1 spot.
+-still able to find enchants for bows, crossbows, and tridents that would be unusable. remove them like mending was removed.
+
+
+
+For buttered:
+-add condition to make self buttered. like a command. wearing butter uniform and eat the buttered potato, drops armor worn when converted to butter
+-add renounce command, can only be called in hometown.
+-add formula conditions, on eatfood  event to check for if buttered.
+-player only drops gold and food on death. dropping weapons encourages spawnkilling which is not fun.
+-drop only all gold plus all food. just have to do playerdeathevent, and get drops. This is to make it rewarding to kill. and to slow down players from plowing from city to where they died. they might stick around just bc they don't drop anything though tbh yeah honestly that seems like a really strong incentive for them stick around. but what if they were doing something like building. they should still stick around i feel like. this also slows down the conversion of townies to buttered interestingly enough, if the gold+potato retriever dies a long the way.
+-remove respawn anchor usage
+-retain inventory on death besides the aformentioned things
+-dont lose butter status on death
+-add buttered potato recipe. bakedpotato plus block of gold on top
+-prevent armor change.
+-give gold hat named "butter" which is undamageable on player's head.
+-maybe don't even add buffed food besides buttered potato........... buttered potato can be similar to gapple
+    -unnerf food, buff seasoned food. yeah seasoned food is strength in this game, should give 2.0 higher staturation and hunger and offer brief regen. steak and chop = 10s regen, apple and potato = absorption plus regen to compensate for lower food stats and the fact that it would be very expensive to make in comparison, so buttered potato has comparable stats to apple, maybe slightly worse saturation for better hunger bc of the fact that potatos are much more plentiful than apples.
+
+
+
+Need to playtest:
+-prevent from placing blocks outside as townie?
+-No insomnia - or maybe keep this. as a way to encourage coming back home... is it too annoying? not sure.
+-rather than removing fortune, just nerf fortune on diamond and gold.
+
+
+Added changes for patch notes:
+-Added border at 65 radius where non-buttered will begin taking damage, world border of 65 might be sufficient for our player base size
+-Cannot sleep outside of radius 65
+-remove automatic gold farming from piglins
+-for general no body gets to place blocks on WORLD border radius +1
+
+World settings:
+difficulty: hard
+end: not available
+spawn protection: 0
+seed: must be determined
+World limit: thinking 2k radius is solid
+
+Bed's don't progress day - just set sleep percentage of 100
+
+
+Later things:
+
+    For when things get out of hand:
+    -WorldGaurd for tnt and lava flow in spawn
+    -askforchange - for when gold is extracted out so players can't leave.
+
+    For Tracking for more fun:
+    -buttered streak Tracking
+    -more gold when asking for change by how long you were alive as buttered
+    -maybe keeping track of staying alive is boring.. incentivizes passive play
+    -should incentivize hunting. keep track of killed gold :) number of gold dropped from killed players + food items - in one life :), only shows current streak. and number of butter kills
+    -score is displayed via, butter-deathmatch /bdm
+
+
+Name:
+BordSMP - short for border or was it bored?
+
+It is not theft. It is certain reality of survival in a resource constrained commune.

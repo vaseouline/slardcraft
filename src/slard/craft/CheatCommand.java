@@ -18,14 +18,12 @@ public class CheatCommand implements CommandExecutor {
             Player player = (Player) arg0;
 
             // Give the player our items (comma-seperated list of all ItemStack)
-            player.getInventory().addItem(BigOre.getBigOre(Material.RAW_IRON), BigOre.getBigOre(Material.RAW_GOLD),
-                    BigOre.getBigOre(Material.DIAMOND), BigOre.getMegaOre(Material.RAW_IRON),
-                    BigOre.getMegaOre(Material.RAW_GOLD), BigOre.getMegaOre(Material.DIAMOND),
+            player.getInventory().addItem(
                     PlayerFoodListener.getSeasonedMeat(Material.COOKED_BEEF),
                     PlayerFoodListener.getSeasonedMeat(Material.COOKED_PORKCHOP),
                     PlayerFoodListener.getFancyCookie(),
-                    PlayerFoodListener.getFancySugar(),
-                    CoatedPickaxe.getCoatedPickaxe(new ItemStack(Material.IRON_PICKAXE)));
+                    PlayerFoodListener.getFancySugar()
+                    );
             player.setHealth(10);
             player.setFoodLevel(1);
             player.setSaturation(1);
