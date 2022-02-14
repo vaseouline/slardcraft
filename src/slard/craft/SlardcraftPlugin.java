@@ -13,6 +13,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import slard.craft.town.GameState;
 import slard.craft.town.GameStateListener;
+import slard.craft.town.RenounceCommand;
 
 public class SlardcraftPlugin extends JavaPlugin {
     // Map of banned crafting items and their legal counterpart. null if no legal
@@ -23,7 +24,8 @@ public class SlardcraftPlugin extends JavaPlugin {
             entry(Material.DIAMOND_SWORD, Material.IRON_SWORD),
             entry(Material.NETHERITE_AXE, Material.IRON_AXE),
             entry(Material.NETHERITE_SWORD, Material.IRON_SWORD),
-            entry(Material.ELYTRA, Material.PHANTOM_MEMBRANE));
+            entry(Material.ELYTRA, Material.PHANTOM_MEMBRANE),
+            entry(Material.RESPAWN_ANCHOR, Material.CRYING_OBSIDIAN));
     public static Set<Material> BANNED_CRAFT_SET = BANNED_CRAFT_MAP.keySet();
 
     public SlardcraftPlugin() {
@@ -48,6 +50,7 @@ public class SlardcraftPlugin extends JavaPlugin {
         if (SlardcraftPlugin.DEBUG)
             this.getCommand("cheat").setExecutor(new CheatCommand());
         this.getCommand("slard").setExecutor(new SlardCommand());
+        this.getCommand("renounce").setExecutor(new RenounceCommand());
     }
 
     // Fired when plugin is disabled
@@ -78,6 +81,8 @@ public class SlardcraftPlugin extends JavaPlugin {
                 Material.COOKED_PORKCHOP));
         getServer().addRecipe(PlayerFoodListener.getFancySugarRecipe(new NamespacedKey(this, "fancy_sugar")));
         getServer().addRecipe(PlayerFoodListener.getFancyCookieRecipe(new NamespacedKey(this, "fancy_cookie")));
+
+        getServer().addRecipe(PlayerFoodListener.getButteredPotatoRecipe(new NamespacedKey(this, "buttered_potato")));
     }
 
 }

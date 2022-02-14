@@ -15,7 +15,7 @@ import org.bukkit.event.player.PlayerItemBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class SmithingListener implements Listener {
-
+//kind of pointless if assuming diamond swords and axes are also uncraftable
     private static List<Material> BANNED_SMITHING_LIST = Arrays.asList(
         Material.NETHERITE_AXE, 
         Material.NETHERITE_SWORD

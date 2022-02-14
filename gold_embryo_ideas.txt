@@ -1,68 +1,115 @@
 
 TODO:
--limit sword and axe to iron max
-- limit enchants for sword and axe to just wooden sword and axe
--come up with list of acceptable enchantments for bow and crossbow and trident and shield
--allow smithing netherite gear
-
+-prevent putting on armor after buttered
+-replace golden helmet with butter indestrucabtle hat
+-test putting new players and stuff like that file and stuff
+-add curse of binding to helmet, and air slots
+-remove all armor on renounce.
+-add flavor text to on kill, drop of buttered soldiers and tridents
 
 
 For Townie/General:
--Make all armor enchantable and creatable... - make sure this is done.
--review mylistener.java to figure out how to enchant special cases, like weapons...
--add change command. drops player a few gold nuggets, and can be called only once per minecraft day, should also say a random thing in the player's perspective from a pool of things. "I am v poor. Can some spare some change? I promise I won't spend it on fancy cookies." "Help! Family was kidnapped by herobrine. I need 3gb and 3gn to afford karate lessons to save my family!" "Oinky-doinky, me's poor and stinky. Can anybody feed me, uwu?" 
--pvp off in town. even for buttered? not sure. I think using town as a battle ground for buttered seems really fun.
--keep cookie
-- Should add player moveportal event, for returning to town safely updating it instantly, bc rn player continues to take dmg until he moves
--prevent block placement on worldborder+1 spot.
--still able to find enchants for bows, crossbows, and tridents that would be unusable. remove them like mending was removed.
-
-
+-email list/text msg for people for when the server turns on plus one player gets on :)
+-convert data format to json rather than serialized
 
 For buttered:
--add condition to make self buttered. like a command. wearing butter uniform and eat the buttered potato, drops armor worn when converted to butter
--add renounce command, can only be called in hometown.
--add formula conditions, on eatfood  event to check for if buttered.
--player only drops gold and food on death. dropping weapons encourages spawnkilling which is not fun.
--drop only all gold plus all food. just have to do playerdeathevent, and get drops. This is to make it rewarding to kill. and to slow down players from plowing from city to where they died. they might stick around just bc they don't drop anything though tbh yeah honestly that seems like a really strong incentive for them stick around. but what if they were doing something like building. they should still stick around i feel like. this also slows down the conversion of townies to buttered interestingly enough, if the gold+potato retriever dies a long the way.
--remove respawn anchor usage
--retain inventory on death besides the aformentioned things
--dont lose butter status on death
--add buttered potato recipe. bakedpotato plus block of gold on top
+
+-replaces crown with indestructable butter hat. 
+-Add lore flavor text "A helmet slathered in butter. You're not sure whether you chose to wear this hat, or if the hat chose you. Either way, due to all of the butter, other armor pieces won't seem to stay on, so this will have to do."
+
+-maybe once each day if you're in town, you gain a few gold nuggets. only if you're in town.
+
 -prevent armor change.
 -give gold hat named "butter" which is undamageable on player's head.
--maybe don't even add buffed food besides buttered potato........... buttered potato can be similar to gapple
-    -unnerf food, buff seasoned food. yeah seasoned food is strength in this game, should give 2.0 higher staturation and hunger and offer brief regen. steak and chop = 10s regen, apple and potato = absorption plus regen to compensate for lower food stats and the fact that it would be very expensive to make in comparison, so buttered potato has comparable stats to apple, maybe slightly worse saturation for better hunger bc of the fact that potatos are much more plentiful than apples.
+-test what happens to items when curse of vanishing is put on them, especially trident
+    -they get kept, gets ignored
 
 
 
 Need to playtest:
--prevent from placing blocks outside as townie?
--No insomnia - or maybe keep this. as a way to encourage coming back home... is it too annoying? not sure.
--rather than removing fortune, just nerf fortune on diamond and gold.
+-think about removing fire aspect arrows. maybe keep them if we're keeping fireworks anyways. range is pretty strong in this case...
 
+
+Tested:
+
+
+Untested:
+-butter status retained in file
+-buttered can place blocks
+-butter has pvp, but townie doesnt
+-add butterd potato recipe, bakedpotato plus block of gold on top, part of becoming buttered + it has comparable stats to gapple, slightly worse saturation for slightly better hunger restore
 
 Added changes for patch notes:
 -Added border at 65 radius where non-buttered will begin taking damage, world border of 65 might be sufficient for our player base size
 -Cannot sleep outside of radius 65
+-cannot place blocks on line 66
 -remove automatic gold farming from piglins
 -for general no body gets to place blocks on WORLD border radius +1
+-fortune for pickaxes turns into mending in enchantment table
+-fortune unable to be added to pickaxes in anvil.
+- limit enchants for sword and axe to just wooden sword and axe
+-limit sword and axe to iron max
+-days can no longer be progressed by sleeping
+-quickshot/power for crossbows/bows removed. enchanted books with quickshot/power cannot be found. A crossbow or bow enchanted with either is replaced with mending. An enchanted book that would've been enchanted with either is given unbreaking 1 instead.
+-unnerf food - tested
+-buffed seasoned steak, might be doing too much gotta, check. not sure if it's double eating food, i don't think it is though, bc i manually set the value
+-keep cookie
+-prevent from placing blocks outside as townie?
+-remove respawn anchor usage
+    -remove craftability
+-buttered transform
+-test leaving and entering town is consistent, should leave town right on >= 65
+-test should not be able to build on 65
+-add renounce command, can only be called in hometown.
+-add condition to make self buttered. like a command. wearing butter uniform and eat the buttered potato, 
+-as buttered losing only levels and tridents on death, retain all inventory
+-replaced infinity with mending
+
+changes hidden to viewer:
+- Added player moveportal event, for returning to town safely updating it instantly, bc rn player continues to take dmg until he moves, same with respawn
+-curse of binding on tridents when buttered works as expected
+
 
 World settings:
+vanilla server properties
 difficulty: hard
-end: not available
+pvp: true
 spawn protection: 0
 seed: must be determined
 World limit: thinking 2k radius is solid
+set world spawn near center
 
+
+bukkit server properties
+end: not available
+
+Game rules:
+achievements hidden
 Bed's don't progress day - just set sleep percentage of 100
+remove insomnia
+
+Socially imposed rules:
+Hacks/Cheats are strictly against the rules e.g. hacked clients, x-ray
+Pouring lava for griefing in town is strictly against the rules, lava for construction and decor, traps is fine
+lava/water casting in town is discouraged.
+Glitches to get around plugin restrictions are against the spirit of the game. Once found, will be added to a list of bugs to eventually fix.
+solo AFK farming is against the rules. - to keep the server inexpensive. afk farming while other player's are playing is fine. 
+
+1. taking items from other player chests is fine in the eyes of the server owner. player discretion should be advised as the game does not lift social responsibilities in the real world. assuming no x-ray
+2. griefing is discouraged. however, due to the size restraint of town, some tearing down/collision with other people's is to be expected. In these conflicts, players are asked to become open minded. "Kitsugi" and what not.
+
+
+pvp is allowed, but again go to point 1.
+
 
 
 Later things:
 
     For when things get out of hand:
     -WorldGaurd for tnt and lava flow in spawn
+    -anti x ray if there are cheaters. would have to ban them
     -askforchange - for when gold is extracted out so players can't leave.
+    -add change command. drops player a few gold nuggets, and can be called only once per minecraft day, should also say a random thing in the player's perspective from a pool of things. "I am v poor. Can some spare some change? I promise I won't spend it on fancy cookies." "Help! Family was kidnapped by herobrine. I need 3gb and 3gn to afford karate lessons to save my family!" "Oinky-doinky, me's poor and stinky. Can anybody feed me, uwu?" 
 
     For Tracking for more fun:
     -buttered streak Tracking

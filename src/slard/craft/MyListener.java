@@ -34,6 +34,7 @@ import org.bukkit.event.entity.VillagerAcquireTradeEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
+import org.bukkit.inventory.AnvilInventory;
 import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -68,11 +69,8 @@ public class MyListener implements Listener {
     private static Set<Material> PICKAXES_SET = new HashSet<>(PICKAXES_LIST);
 
     private static List<Material> MISC_LIST = Arrays.asList(
-    Material.SHIELD,
-    Material.BOW,
-    Material.CROSSBOW,
-    Material.TRIDENT,
-    Material.ELYTRA
+        Material.BOW, 
+        Material.CROSSBOW
     );
 
 
@@ -90,6 +88,15 @@ public class MyListener implements Listener {
         Material.GOLDEN_SWORD
     );
     private static Set<Material> GOLD_NUGGETABLE_SET = new HashSet<>(GOLD_NUGGETABLE_LIST);
+
+    private static List<Enchantment> BANNED_ENCHANTMENTS_LIST = Arrays.asList(
+        Enchantment.QUICK_CHARGE,
+        Enchantment.ARROW_DAMAGE,
+        Enchantment.ARROW_INFINITE
+    );
+    private static Set<Enchantment> BANNED_ENCHANTMENTS_SET = new HashSet<>(BANNED_ENCHANTMENTS_LIST);
+
+
     @EventHandler
     public void disableZombiePiglinGoldDrop(EntityDeathEvent event) {
         if (event.getEntity() instanceof PigZombie || event.getEntity() instanceof Piglin) {            
@@ -116,7 +123,6 @@ public class MyListener implements Listener {
         }
     }
 
-    // TODO for pickaxes first, then do it on anvil as well, and sanitize item stack
     @EventHandler
     public void sanitizeEnchantmentTable(PrepareItemEnchantEvent event) {
         // Makes enchantments dissappear for melee weapons
@@ -127,28 +133,77 @@ public class MyListener implements Listener {
             }
             return;
         }
-        if (PICKAXES_SET.contains(event.getItem().getType())) {
-            EnchantmentOffer[] eo = event.getOffers();
-            for (int i = 0; i < eo.length; i++) {
-                if (eo[i].getEnchantment() == Enchantment.LOOT_BONUS_BLOCKS) {
-                    eo[i] = null;
-                }
-            }
-            return;
-        }
     }
 
     @EventHandler
     public void sanitizeEnchantmentCompletion(EnchantItemEvent event) {
         Map<Enchantment, Integer> enchants = event.getEnchantsToAdd();
-        enchants.remove(Enchantment.LOOT_BONUS_BLOCKS);
+
+        if (PICKAXES_SET.contains(event.getItem().getType())) {
+            if (enchants.remove(Enchantment.LOOT_BONUS_BLOCKS) != null) {
+                enchants.put(Enchantment.MENDING, 1);
+            }
+        }
+        if (event.getItem().getType().equals(Material.BOW)) {
+            if (enchants.remove(Enchantment.ARROW_DAMAGE) != null) {
+                enchants.put(Enchantment.MENDING, 1);
+                if (SlardcraftPlugin.DEBUG) Bukkit.broadcastMessage("Replaced arrow damage with mending");
+            }
+            if (enchants.remove(Enchantment.ARROW_INFINITE) != null) {
+                enchants.put(Enchantment.MENDING, 1);
+                if (SlardcraftPlugin.DEBUG) Bukkit.broadcastMessage("Replaced arrow infinite with mending");
+            }
+        }
+        if (event.getItem().getType().equals(Material.CROSSBOW)) {
+            if (enchants.remove(Enchantment.QUICK_CHARGE) != null) {
+                enchants.put(Enchantment.MENDING, 1);
+                if (SlardcraftPlugin.DEBUG) Bukkit.broadcastMessage("Replaced fortune pickaxe with mending");
+            }
+        }
+
+        if (event.getItem().getType().equals(Material.ENCHANTED_BOOK)) {
+            boolean sanitized = ((EnchantmentStorageMeta) event.getItem().getItemMeta()).removeStoredEnchant(Enchantment.ARROW_DAMAGE);
+            sanitized = sanitized || ((EnchantmentStorageMeta) event.getItem().getItemMeta()).removeStoredEnchant(Enchantment.ARROW_INFINITE);
+            sanitized = sanitized || ((EnchantmentStorageMeta) event.getItem().getItemMeta()).removeStoredEnchant(Enchantment.QUICK_CHARGE);
+            if (sanitized) {
+                ((EnchantmentStorageMeta) event.getItem().getItemMeta()).addEnchant(Enchantment.DURABILITY, 1, false);
+            }
+        }
+        
     }
+
 
     @EventHandler
     public void sanitizeAnvil(PrepareAnvilEvent event) {
         if (BANNED_ENCHANTED_MELEE_SET.contains(event.getResult().getType())) {
             event.setResult(null);
             return;
+        }
+        if (PICKAXES_SET.contains(event.getResult().getType())) {
+            AnvilInventory inv = event.getInventory();
+            ItemStack is = inv.getItem(1);
+            if (isEnchantedBook(is, Enchantment.LOOT_BONUS_BLOCKS)) {
+                event.setResult(null);
+                return;
+            }
+        }
+
+        if (event.getResult().getType().equals(Material.BOW)) {
+            AnvilInventory inv = event.getInventory();
+            ItemStack is = inv.getItem(1);
+            if (isEnchantedBook(is, Enchantment.ARROW_DAMAGE) || isEnchantedBook(is, Enchantment.ARROW_INFINITE)) {
+                event.setResult(null);
+                return;
+            }
+        }
+
+        if (event.getResult().getType().equals(Material.CROSSBOW)) {
+            AnvilInventory inv = event.getInventory();
+            ItemStack is = inv.getItem(1);
+            if (isEnchantedBook(is, Enchantment.QUICK_CHARGE)) {
+                event.setResult(null);
+                return;
+            }
         }
 
         //prevent renaming of custom items
@@ -243,11 +298,63 @@ public class MyListener implements Listener {
             is.setType(SlardcraftPlugin.BANNED_CRAFT_MAP.get(is.getType()));
             sanitized = true;
         }
+
+        if (is.getType().equals(Material.ENCHANTED_BOOK)) {
+            for (Enchantment e : BANNED_ENCHANTMENTS_LIST) {
+                if (isEnchantedBook(is, e)) {
+                    if (SlardcraftPlugin.DEBUG) Bukkit.broadcastMessage("replacing banned with legal item: Book");
+                    sanitizeEnchantedBook(is);
+                    sanitized = true;
+                    break;
+                }
+            }
+        }
+        if (is.getType().equals(Material.BOW)) {
+            for(Enchantment e : is.getEnchantments().keySet()){
+                if (e.equals(Enchantment.ARROW_DAMAGE) || e.equals(Enchantment.ARROW_INFINITE)) {
+                    is.removeEnchantment(e);
+                    if (SlardcraftPlugin.DEBUG) Bukkit.broadcastMessage("removing " + e.toString() + " from item: " + is.toString());
+                    sanitized = true;
+                    break;
+                }
+                
+            }
+        }
+        if (is.getType().equals(Material.CROSSBOW)) {
+            for(Enchantment e : is.getEnchantments().keySet()){
+                if (e.equals(Enchantment.QUICK_CHARGE)) {
+                    is.removeEnchantment(e);
+                    if (SlardcraftPlugin.DEBUG) Bukkit.broadcastMessage("removing QUICK_CHARGE from item: " + is.toString());
+                    sanitized = true;
+                    break;
+                }
+                
+            }
+        }
         return sanitized;
     }
 
     private static boolean isException(ItemStack is) {
         return false;
+    }
+
+    private static boolean isEnchantedBook(ItemStack is, Enchantment enchantment) {
+        if (is == null) {
+            return false;
+        }
+        if (is.getType().equals(Material.ENCHANTED_BOOK)) {
+            EnchantmentStorageMeta esm = (EnchantmentStorageMeta) is.getItemMeta();
+            if (esm.hasStoredEnchant(enchantment)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static void sanitizeEnchantedBook(ItemStack is) {
+        is.setType(Material.BOOK);
+        ItemStack book = new ItemStack(Material.BOOK);
+        is.setItemMeta(book.getItemMeta());
     }
 
 }

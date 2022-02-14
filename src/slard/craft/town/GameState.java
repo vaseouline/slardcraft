@@ -15,6 +15,7 @@ import java.util.UUID;
 import javax.annotation.Nullable;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 import slard.craft.SlardcraftPlugin;
 
@@ -75,6 +76,11 @@ public class GameState {
         PlayerState ps = new PlayerState(isButtered, inTown);
         players.put(uuid, ps);
         return ps;
+    }
+
+    public static PlayerState getPlayerState(Player player) {
+      UUID uuid = player.getUniqueId();
+      return players.get(uuid);
     }
 
 
