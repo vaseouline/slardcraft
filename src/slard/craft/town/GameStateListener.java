@@ -123,12 +123,6 @@ public class GameStateListener implements Listener {
     double x = loc.getX();
     double z = loc.getZ();
 
-    if (loc.getWorld().getEnvironment() == Environment.NETHER) {
-      if (x < BORDER_RADIUS/8 && x > BORDER_RADIUS/8 * -1 && z < BORDER_RADIUS/8 && z > BORDER_RADIUS/8*-1) {
-        return true;
-      }
-      return false;
-    }
     if (x < BORDER_RADIUS && x > BORDER_RADIUS * -1 && z < BORDER_RADIUS && z > BORDER_RADIUS*-1) {
       return true;
     }

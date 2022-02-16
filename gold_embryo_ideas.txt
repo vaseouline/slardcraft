@@ -1,12 +1,34 @@
 
 TODO:
--prevent putting on armor after buttered
--replace golden helmet with butter indestrucabtle hat
 -test putting new players and stuff like that file and stuff
--add curse of binding to helmet, and air slots
--remove all armor on renounce.
--add flavor text to on kill, drop of buttered soldiers and tridents
 
+
+-remove all armor on renounce.- readd new golden helmet
+
+-think about allowing all weapons and enchants for weapons. Am I afraid of sneak attacks doing too much damage? players should be able to merk mobs once they get strong enough i think.
+-players lose time when they kill each other far away from home, which is already too real....
+-so allow axe and sword full enchants....? and let players self decide whether or not they want to pvp with super op tools
+-still want to remove fortune and infinity - can replace either with mending.
+-i dont think players are going to be keen on fighting unless agreed upon
+- i think i was too ambitious with the idea of switching between wooden sword and iron sword for pvp. too far....
+-what happens when no potato??? do players have to grind out 200 zombies? for 1 miracle potato? I think that would be kind of sick.
+-Yeah, what if I keep fortune and infinity normal too actually. Keep it like normal minecraft.....at the same time though, i do think those two things are particularly annoying... would be actually neat to replace both with mending.
+-yeah set on fortune and infinity changes.  everything else can be normal. if it gets out of hand, I can nerf
+
+-I think everything else is fine.
+-I think people are going to want to play simple minecraft, without all these edge cases..
+-players can keep trident on death.
+-not sure, will have to think on this.
+
+--what's the consequence of dying?
+--what's the benefit of building structures if everybody retains all of their stuff? why build a farm when you never lose stuff? should players still lose their belongins on death.........And does that make this too hard? it also disincentivizes pvp, but i don't think that's what this server is about anymore... on pvp kill maybe retain inventory? but this can easily be abused to fast travel home. probably keep it simple lose everything like normal minecraft. This border will be a stay home mechanic. and those who leave are brave
+
+--everybody is a glass cannon in this world...
+--everybody is protected from the consequences of death in this world too apparently
+--also no resouces are bled and lost...I think this is okay.this will be a build server anyways.
+
+-yeah maybe don't change the challenges of the game too too much. keep it simple.
+--still not adding the End though. lag of elytra + shulkers boxes are too op. plus ender pearls and ender farms are too op.
 
 For Townie/General:
 -email list/text msg for people for when the server turns on plus one player gets on :)
@@ -14,30 +36,35 @@ For Townie/General:
 
 For buttered:
 
--replaces crown with indestructable butter hat. 
--Add lore flavor text "A helmet slathered in butter. You're not sure whether you chose to wear this hat, or if the hat chose you. Either way, due to all of the butter, other armor pieces won't seem to stay on, so this will have to do."
-
--maybe once each day if you're in town, you gain a few gold nuggets. only if you're in town.
-
--prevent armor change.
--give gold hat named "butter" which is undamageable on player's head.
--test what happens to items when curse of vanishing is put on them, especially trident
-    -they get kept, gets ignored
-
 
 
 Need to playtest:
--think about removing fire aspect arrows. maybe keep them if we're keeping fireworks anyways. range is pretty strong in this case...
+Seriously consider buttered players losing everything besides hat. Minecraft is a hard game, no reason it should not be punishing....
+Keeping it simple......
+-a counter point though is that out of the border, no beds can be placed, so the distance traveled to the sight of death to recollect belongings can be tough.
+-maybe that's just life.
+-this super encourages players to stay close to home.
+-honestly makes sense.
 
+-so the only real changes are seasonsed meats, which I could remove...
+-added buttered potato
+-butter status
+-border
+-no building as townie outside of border
+-pvp only as butter
+-no armor except for butter as butter
+-remove fortune for pickaxe, and infinity from bow.
+-no end
+-no insomnia
+-no beds outside of border
+-ask for change grants 1 gn per minecraft day. so it takes 9*5 minecraft days for a helmet which is 45*20 min which is 15 hrs. ask a friend to join, and it's much faster
 
 Tested:
 
 
 Untested:
--butter status retained in file
--buttered can place blocks
 -butter has pvp, but townie doesnt
--add butterd potato recipe, bakedpotato plus block of gold on top, part of becoming buttered + it has comparable stats to gapple, slightly worse saturation for slightly better hunger restore
+-check that border in nether should behave the exact same way as over world. this will allow non buttered to travel far out, but will die slowly in over world
 
 Added changes for patch notes:
 -Added border at 65 radius where non-buttered will begin taking damage, world border of 65 might be sufficient for our player base size
@@ -64,6 +91,8 @@ Added changes for patch notes:
 -add condition to make self buttered. like a command. wearing butter uniform and eat the buttered potato, 
 -as buttered losing only levels and tridents on death, retain all inventory
 -replaced infinity with mending
+-replaces crown with indestructable butter hat. 
+-can't put other armor on while buttered
 
 changes hidden to viewer:
 - Added player moveportal event, for returning to town safely updating it instantly, bc rn player continues to take dmg until he moves, same with respawn
@@ -110,6 +139,7 @@ Later things:
     -anti x ray if there are cheaters. would have to ban them
     -askforchange - for when gold is extracted out so players can't leave.
     -add change command. drops player a few gold nuggets, and can be called only once per minecraft day, should also say a random thing in the player's perspective from a pool of things. "I am v poor. Can some spare some change? I promise I won't spend it on fancy cookies." "Help! Family was kidnapped by herobrine. I need 3gb and 3gn to afford karate lessons to save my family!" "Oinky-doinky, me's poor and stinky. Can anybody feed me, uwu?" 
+    -nerf power/quickcharge/fireworks/trident/sword/axe whatever is needed to be done.
 
     For Tracking for more fun:
     -buttered streak Tracking
