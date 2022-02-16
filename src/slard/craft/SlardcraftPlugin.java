@@ -1,29 +1,19 @@
 package slard.craft;
 
-import static java.util.Map.entry;
-
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import static java.util.Map.entry;
 
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import slard.craft.town.GameState;
-import slard.craft.town.GameStateListener;
-import slard.craft.town.RenounceCommand;
-
 public class SlardcraftPlugin extends JavaPlugin {
-    // Map of banned crafting items and their legal counterpart. null if no legal
-    // counterpart
     public static boolean DEBUG;
+
     public static Map<Material, Material> BANNED_CRAFT_MAP = Map.ofEntries(
-            entry(Material.DIAMOND_AXE, Material.IRON_AXE),
-            entry(Material.DIAMOND_SWORD, Material.IRON_SWORD),
-            entry(Material.NETHERITE_AXE, Material.IRON_AXE),
-            entry(Material.NETHERITE_SWORD, Material.IRON_SWORD),
+            entry(Material.SHULKER_BOX, Material.SHULKER_SHELL),
             entry(Material.ELYTRA, Material.PHANTOM_MEMBRANE),
             entry(Material.RESPAWN_ANCHOR, Material.CRYING_OBSIDIAN));
     public static Set<Material> BANNED_CRAFT_SET = BANNED_CRAFT_MAP.keySet();
@@ -39,24 +29,16 @@ public class SlardcraftPlugin extends JavaPlugin {
         }
         DEBUG = Boolean.parseBoolean(System.getenv("SLARD_DEBUG"));
         sanitizeRecipes();
-        addRecipes();
-        getServer().getPluginManager().registerEvents(new MyListener(), this);
-        getServer().getPluginManager().registerEvents(new PlayerFoodListener(), this);
-        getServer().getPluginManager().registerEvents(new SmithingListener(), this);
+        getServer().getPluginManager().registerEvents(new DisableEnchantListener(), this);
         getServer().getPluginManager().registerEvents(new GameStateListener(this), this);
-        GameState.initializeGameState();
 
-
-        if (SlardcraftPlugin.DEBUG)
-            this.getCommand("cheat").setExecutor(new CheatCommand());
-        this.getCommand("slard").setExecutor(new SlardCommand());
-        this.getCommand("renounce").setExecutor(new RenounceCommand());
+        // TODO
+        this.getCommand("setradius").setExecutor(new SetRadiusCommand());
     }
 
     // Fired when plugin is disabled
     @Override
     public void onDisable() {
-        GameState.saveGameState();
     }
 
     private void sanitizeRecipes() {
@@ -68,21 +50,10 @@ public class SlardcraftPlugin extends JavaPlugin {
                 continue;
             }
 
-            if (SlardcraftPlugin.BANNED_CRAFT_SET.contains(recipe.getResult().getType()))
+            if (SlardcraftPlugin.BANNED_CRAFT_SET.contains(recipe.getResult().getType())) {
                 recipes.remove();
+            }
         }
-    }
-
-    private void addRecipes() {
-
-        getServer().addRecipe(PlayerFoodListener.getSeasonedMeatRecipe(new NamespacedKey(this, "seasoned_steak"),
-                Material.COOKED_BEEF));
-        getServer().addRecipe(PlayerFoodListener.getSeasonedMeatRecipe(new NamespacedKey(this, "seasoned_porkchop"),
-                Material.COOKED_PORKCHOP));
-        getServer().addRecipe(PlayerFoodListener.getFancySugarRecipe(new NamespacedKey(this, "fancy_sugar")));
-        getServer().addRecipe(PlayerFoodListener.getFancyCookieRecipe(new NamespacedKey(this, "fancy_cookie")));
-
-        getServer().addRecipe(PlayerFoodListener.getButteredPotatoRecipe(new NamespacedKey(this, "buttered_potato")));
     }
 
 }

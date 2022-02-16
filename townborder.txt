@@ -1,7 +1,0 @@
-TODO:
-
--maybe make nether bordered too 1/4 if I want to let all enchantments back in the game - but enchantments are so lameeee
--convert all found enchanted armor in to enchanted leather variants lol
--the gold players must come back and feed the townies. Guide them out lmao. Maybe you can't even enter the nether while being a townie? nah just do the border inside.
--til a command called reload, which reloads all the plugin jars
--later on make, a command called -handout, gives a few gold nuggets each minecraft day can only be called once a minecraft day.

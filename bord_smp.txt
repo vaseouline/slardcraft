@@ -1,0 +1,70 @@
+BordSMP
+TODO:
+- operator command to set border size
+-to be retrofitted to old worlds
+--can add player join event for sanitizing their inventory to be able to retroactively apply this plugin to any world.
+- would also have to reset their bed spawn point back to world spawn if it's outside of town.
+
+
+TODO Later:
+API request for server status, players, if it's starting, if it's ready
+API Request for turning server on. There's going to be a password as well. ERror code 69 for wrong password. error code 420 for correct password.
+- I still do think some sort of long term tracking and losing would be cool. something to work towards... 
+
+Plugin Added:
+-no fortune pickaxe enchant from enchant table - replaced with mending
+-fortune book cannot be added to pickaxe
+-pickaxes already containing fortune are sanitized, meaning fortune is replaced with mending
+
+-no infinity bows enchant from enchant table - replaced with mending
+-infinity book cannot be enchanted - replaced with unbreaking 1
+-bows containing infinity are sanitized, meaning infinity is replaced with mending
+
+-respawn anchor recipe is removed
+-shulker box uncraftable
+-elytra uncollectable
+
+-a border is added around worldspawn
+-when outside of the border players will start taking damage unless not wearing any armor
+- the border size is settable but default is 64, on block x or z =65 players will not be able to place blocks, but will be able to outside or inside that range
+--command to set border size
+--command to set worldspawn is already given by default minecraft, maybe there is a get world spawn function, so i can be stateless
+- a scheduled task is made on plugin enable, it grabs the list of all players currently online and applies a conditional damage to them if they are outside the border wearing armor
+- when pvp happens within the border, players killed by another player within the border(killed is in border or killer is in border) keep their items and their exp/levels
+- beds cannot be slept on out side of the border
+-in nether and end, that is considered outside of border
+
+
+
+World settings:
+vanilla server properties
+difficulty: hard
+pvp: true
+spawn protection: 0
+seed: must be determined
+World limit: thinking 2k radius is solid
+
+Game Settings
+achievements hidden
+Bed's don't progress day - just set sleep percentage of 100
+remove insomnia
+
+Bukkit Settings
+end = true
+
+Social Rules and Guidelines
+1. Using x-ray/hacked clients is bannable
+2. Pooring lava in town for griefing is against rules. Same for lava casting.
+3. Abusing glitches to get around plugin rules is against the spirit of the game.
+4. Solo afk farming costs money. Afk farming should be limited to when other players are on the server.
+
+1. taking items from other player chests is fine in the eyes of the server owner. player discretion should be advised as the game does not lift social responsibilities in the real world. assuming no x-ray
+2. griefing is discouraged. however, due to the size restraint of town, some tearing down/collision with other people's is to be expected. In these conflicts, players are asked to become open minded. "Kitsugi" and what not.
+3. pvp follows same principle as point 1.
+
+
+TODO if things get out of hand:
+ -world guard for preventing lava and tnt in border
+ -anti x-ray for cheaters
+ -a solution for spawn campers
+ -a solution for trapping toolless in spawn, what if a player wrapped the entire border in obsidian....
