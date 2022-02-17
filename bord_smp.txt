@@ -1,9 +1,6 @@
 BordSMP
 TODO:
-- operator command to set border size
--to be retrofitted to old worlds
---can add player join event for sanitizing their inventory to be able to retroactively apply this plugin to any world.
-- would also have to reset their bed spawn point back to world spawn if it's outside of town.
+
 
 
 TODO Later:
@@ -33,15 +30,21 @@ Plugin Added:
 - when pvp happens within the border, players killed by another player within the border(killed is in border or killer is in border) keep their items and their exp/levels
 - beds cannot be slept on out side of the border
 -in nether and end, that is considered outside of border
+- operator command to set border size
 
-
+-to be retrofitted to old worlds
+--can add player join event for sanitizing their inventory to be able to retroactively apply this plugin to any world.
+- would also have to reset their bed spawn point back to world spawn if it's outside of town.
 
 World settings:
 vanilla server properties
 difficulty: hard
 pvp: true
+keepspawninmemory: true
+
+Have to be set in file:
 spawn protection: 0
-seed: must be determined
+seed: leavearandomseed x-109 z-163
 World limit: thinking 2k radius is solid
 
 Game Settings

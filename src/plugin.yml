@@ -5,4 +5,4 @@ api-version: 1.18
 commands:
   setradius:
       description: Sets the radius of the border around world spawn
-      usage: /<command> <arg>
+      usage: /<command> <radius>

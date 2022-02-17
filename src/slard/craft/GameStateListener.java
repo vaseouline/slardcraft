@@ -1,6 +1,8 @@
 package slard.craft;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Difficulty;
+import org.bukkit.GameRule;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
@@ -11,6 +13,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
@@ -27,8 +30,16 @@ public class GameStateListener implements Listener {
   BukkitScheduler scheduler = Bukkit.getScheduler();
 
   public GameStateListener(JavaPlugin plugin) {
-
+    if (System.getenv("BORDER_RADIUS") != null) {
+      try {
+        BORDER_RADIUS = Integer.parseInt(System.getenv("BORDER_RADIUS"));
+      } catch (NumberFormatException e) {
+        System.out.println("Border radius could not be set to: " + System.getenv("BORDER_RADIUS"));
+      }
+      
+    }
     this.plugin = plugin;
+    setGameRules(getOverWorld(plugin));
     addTownDamage(plugin);
   }
 
@@ -39,6 +50,15 @@ public class GameStateListener implements Listener {
       }
     }
     return null;
+  }
+
+  public static void setGameRules(World world) {
+    world.setGameRule(GameRule.ANNOUNCE_ADVANCEMENTS, false);
+    world.setGameRule(GameRule.DO_INSOMNIA, false);
+    world.setGameRule(GameRule.PLAYERS_SLEEPING_PERCENTAGE, 200);
+    world.setDifficulty(Difficulty.HARD);
+    world.setPVP(true);
+    world.setKeepSpawnInMemory(true);
   }
 
   private static void addTownDamage(JavaPlugin plugin) {
@@ -112,6 +132,14 @@ public class GameStateListener implements Listener {
     double[] xz = getBorderXZ(spawn);
     if (x == xz[0] || x == xz[1] - 1 || z == xz[2] || z == xz[3] - 1) {
       event.setCancelled(true);
+    }
+  }
+
+  @EventHandler
+  public void replacePlayerRespawnEvent(PlayerRespawnEvent event) {
+    Location spawn = getOverWorld(this.plugin).getSpawnLocation();
+    if (!inTown(event.getRespawnLocation(), spawn)) {
+      event.setRespawnLocation(spawn);
     }
   }
 

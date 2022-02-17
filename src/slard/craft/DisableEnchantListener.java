@@ -19,6 +19,7 @@ import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.VillagerAcquireTradeEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.AnvilInventory;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -105,6 +106,17 @@ public class DisableEnchantListener implements Listener {
     @EventHandler
     public void sanitizeInventoryOpenEvent(InventoryOpenEvent event) {
         Inventory inv = event.getInventory();
+        sanitizeInventory(inv);
+        
+    }
+
+    @EventHandler
+    public void sanitizePlayerOnJoin(PlayerJoinEvent event) {
+        Inventory inv = event.getPlayer().getInventory();
+        sanitizeInventory(inv);
+    }
+
+    public static void sanitizeInventory(Inventory inv) {
         Iterator<ItemStack> ii = inv.iterator();
         if (SlardcraftPlugin.DEBUG)
             Bukkit.broadcastMessage("Attempting Sanitization on inventory.");

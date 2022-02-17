@@ -1,24 +1,35 @@
 package slard.craft;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 
 public class SetRadiusCommand implements CommandExecutor {
 
     @Override
-    public boolean onCommand(CommandSender arg0, Command arg1, String arg2, String[] arg3) {
-        if (arg0 instanceof Player) {
-            Player player = (Player) arg0;
-
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (args.length != 1) {
+            sender.sendMessage("/setradius needs exactly 1 arg of radius.");
+            return false;
         }
-
-        // If the player (or console) uses our command correct, we can return true
+        if (sender instanceof Player) {
+            Player player = (Player) sender;
+            if (!player.isOp()) {
+                player.sendMessage("Must be op to use that command.");
+                return true;
+            }
+        }
+        int newRadius;
+        try {
+            newRadius = Integer.parseInt(args[0]);
+        } catch (NumberFormatException e) {
+            sender.sendMessage(args[0] + " is not parsable as integer.");
+            return false;
+        }
+        GameStateListener.BORDER_RADIUS = newRadius;
+        sender.sendMessage("Radius set to: " + args[0]);
         return true;
     }
 

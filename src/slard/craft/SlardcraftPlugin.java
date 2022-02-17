@@ -32,7 +32,6 @@ public class SlardcraftPlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new DisableEnchantListener(), this);
         getServer().getPluginManager().registerEvents(new GameStateListener(this), this);
 
-        // TODO
         this.getCommand("setradius").setExecutor(new SetRadiusCommand());
     }
 
