@@ -112,12 +112,12 @@ public class GameStateListener implements Listener {
 
   public static void informPlayerInTownHelper(Location from, Location to, Location spawn, Player player) {
     if (inTown(from, spawn) && !inTown(to, spawn)) {
-      if (SlardcraftPlugin.DEBUG)
+      if (BordSmpPlugin.DEBUG)
         Bukkit.broadcastMessage(player.getDisplayName() + " left town.");
       player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("Left."));
     }
     if (!inTown(from, spawn) && inTown(to, spawn)) {
-      if (SlardcraftPlugin.DEBUG)
+      if (BordSmpPlugin.DEBUG)
         Bukkit.broadcastMessage(player.getDisplayName() + " entered town.");
       player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("Returned."));
     }

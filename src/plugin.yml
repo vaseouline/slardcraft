@@ -1,5 +1,5 @@
-name: SlardcraftPlugin
-main: slard.craft.SlardcraftPlugin
+name: BordSmpPlugin
+main: slard.craft.BordSmpPlugin
 version: 1.0
 api-version: 1.18
 commands:

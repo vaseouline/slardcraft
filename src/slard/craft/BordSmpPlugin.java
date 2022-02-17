@@ -9,7 +9,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class SlardcraftPlugin extends JavaPlugin {
+public class BordSmpPlugin extends JavaPlugin {
     public static boolean DEBUG;
 
     public static Map<Material, Material> BANNED_CRAFT_MAP = Map.ofEntries(
@@ -17,10 +17,6 @@ public class SlardcraftPlugin extends JavaPlugin {
             entry(Material.ELYTRA, Material.PHANTOM_MEMBRANE),
             entry(Material.RESPAWN_ANCHOR, Material.CRYING_OBSIDIAN));
     public static Set<Material> BANNED_CRAFT_SET = BANNED_CRAFT_MAP.keySet();
-
-    public SlardcraftPlugin() {
-
-    }
 
     @Override
     public void onEnable() {
@@ -49,7 +45,7 @@ public class SlardcraftPlugin extends JavaPlugin {
                 continue;
             }
 
-            if (SlardcraftPlugin.BANNED_CRAFT_SET.contains(recipe.getResult().getType())) {
+            if (BordSmpPlugin.BANNED_CRAFT_SET.contains(recipe.getResult().getType())) {
                 recipes.remove();
             }
         }

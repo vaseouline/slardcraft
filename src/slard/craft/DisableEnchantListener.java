@@ -43,7 +43,7 @@ public class DisableEnchantListener implements Listener {
         if (PICKAXES_SET.contains(event.getItem().getType())) {
             if (enchants.remove(Enchantment.LOOT_BONUS_BLOCKS) != null) {
                 enchants.put(Enchantment.MENDING, 1);
-                if (SlardcraftPlugin.DEBUG)
+                if (BordSmpPlugin.DEBUG)
                     Bukkit.broadcastMessage("Replaced fortune with mending");
                 return;
             }
@@ -51,7 +51,7 @@ public class DisableEnchantListener implements Listener {
         if (event.getItem().getType().equals(Material.BOW)) {
             if (enchants.remove(Enchantment.ARROW_INFINITE) != null) {
                 enchants.put(Enchantment.MENDING, 1);
-                if (SlardcraftPlugin.DEBUG)
+                if (BordSmpPlugin.DEBUG)
                     Bukkit.broadcastMessage("Replaced arrow infinite with mending");
                 return;
             }
@@ -59,7 +59,7 @@ public class DisableEnchantListener implements Listener {
         if (event.getItem().getType().equals(Material.BOOK)) {
             if (enchants.remove(Enchantment.ARROW_INFINITE) != null) {
                 enchants.put(Enchantment.DURABILITY, 1);
-                if (SlardcraftPlugin.DEBUG)
+                if (BordSmpPlugin.DEBUG)
                     Bukkit.broadcastMessage("Replaced arrow infinite with durability");
                 return;
             }
@@ -118,7 +118,7 @@ public class DisableEnchantListener implements Listener {
 
     public static void sanitizeInventory(Inventory inv) {
         Iterator<ItemStack> ii = inv.iterator();
-        if (SlardcraftPlugin.DEBUG)
+        if (BordSmpPlugin.DEBUG)
             Bukkit.broadcastMessage("Attempting Sanitization on inventory.");
         while (ii.hasNext()) {
             ItemStack is = ii.next();
@@ -132,7 +132,7 @@ public class DisableEnchantListener implements Listener {
             return;
         }
         Item item = event.getItem();
-        if (SlardcraftPlugin.DEBUG)
+        if (BordSmpPlugin.DEBUG)
             Bukkit.broadcastMessage("Attempting Sanitization on: " + event.toString());
         sanitizeItemStack(item.getItemStack());
     }
@@ -142,21 +142,21 @@ public class DisableEnchantListener implements Listener {
             return false;
         }
 
-        if (SlardcraftPlugin.DEBUG)
+        if (BordSmpPlugin.DEBUG)
             Bukkit.broadcastMessage("Original item: " + is.toString());
 
-        if (SlardcraftPlugin.BANNED_CRAFT_SET.contains(is.getType())) {
-            if (SlardcraftPlugin.DEBUG)
+        if (BordSmpPlugin.BANNED_CRAFT_SET.contains(is.getType())) {
+            if (BordSmpPlugin.DEBUG)
                 Bukkit.broadcastMessage("replacing banned with legal item: "
-                        + SlardcraftPlugin.BANNED_CRAFT_MAP.get(is.getType()).toString());
-            is.setType(SlardcraftPlugin.BANNED_CRAFT_MAP.get(is.getType()));
+                        + BordSmpPlugin.BANNED_CRAFT_MAP.get(is.getType()).toString());
+            is.setType(BordSmpPlugin.BANNED_CRAFT_MAP.get(is.getType()));
             return true;
         }
 
         if (is.getType().equals(Material.ENCHANTED_BOOK)) {
             EnchantmentStorageMeta eSM = (EnchantmentStorageMeta) is.getItemMeta();
             if (eSM.hasStoredEnchant(Enchantment.ARROW_INFINITE)) {
-                if (SlardcraftPlugin.DEBUG)
+                if (BordSmpPlugin.DEBUG)
                     Bukkit.broadcastMessage("replacing " + "infinity" + " with book: " + is.toString());
                 is.setType(Material.BOOK);
                 return true;
@@ -168,10 +168,10 @@ public class DisableEnchantListener implements Listener {
             if (removed > 0) {
                 is.addEnchantment(Enchantment.MENDING, 1);
 
-                if (SlardcraftPlugin.DEBUG)
+                if (BordSmpPlugin.DEBUG)
                     Bukkit.broadcastMessage("removing " + "infinity" + " from item: " + is.toString());
 
-                if (SlardcraftPlugin.DEBUG)
+                if (BordSmpPlugin.DEBUG)
                     Bukkit.broadcastMessage("adding " + "mending" + " to item: " + is.toString());
 
                 return true;
@@ -182,10 +182,10 @@ public class DisableEnchantListener implements Listener {
             if (removed > 0) {
                 is.addEnchantment(Enchantment.MENDING, 1);
 
-                if (SlardcraftPlugin.DEBUG)
+                if (BordSmpPlugin.DEBUG)
                     Bukkit.broadcastMessage("removing " + "fortune" + " from item: " + is.toString());
 
-                if (SlardcraftPlugin.DEBUG)
+                if (BordSmpPlugin.DEBUG)
                     Bukkit.broadcastMessage("adding " + "mending" + " to item: " + is.toString());
 
                 return true;
