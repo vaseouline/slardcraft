@@ -3,7 +3,8 @@ body {
     padding-left: 10px;
     padding-right: 10px;
     margin: 0 auto;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: monospace;
+    background-color: gainsboro;
 }
 
 img {
@@ -11,3 +12,4 @@ img {
 
     width: 100%;
 }
+

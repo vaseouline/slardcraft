@@ -7,6 +7,10 @@ TODO Later:
 API request for server status, players, if it's starting, if it's ready
 API Request for turning server on. There's going to be a password as well. ERror code 69 for wrong password. error code 420 for correct password.
 - I still do think some sort of long term tracking and losing would be cool. something to work towards... 
+More in phone notes
+Make respawn anchor craftable but uninteractable like bed
+emails and texts for when players join the server, and the text contains 2/20 for how many other players are on.
+Or a discord bot? probably better:)
 
 Plugin Added:
 -no fortune pickaxe enchant from enchant table - replaced with mending
