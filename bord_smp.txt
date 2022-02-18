@@ -11,6 +11,7 @@ More in phone notes
 Make respawn anchor craftable but uninteractable like bed
 emails and texts for when players join the server, and the text contains 2/20 for how many other players are on.
 Or a discord bot? probably better:)
+limit server size to 5 players max. only 2G ram :)
 
 Plugin Added:
 -no fortune pickaxe enchant from enchant table - replaced with mending
