@@ -115,16 +115,21 @@ public class GameStateListener implements Listener {
       if (BordSmpPlugin.DEBUG)
         Bukkit.broadcastMessage(player.getDisplayName() + " left town.");
       player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("Left."));
+      return;
     }
     if (!inTown(from, spawn) && inTown(to, spawn)) {
       if (BordSmpPlugin.DEBUG)
         Bukkit.broadcastMessage(player.getDisplayName() + " entered town.");
       player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("Returned."));
+      return;
     }
   }
 
   @EventHandler
   public void preventBuildOnBorder(BlockPlaceEvent event) {
+    if (event.getBlock().getLocation().getWorld().getEnvironment() != Environment.NORMAL) {
+      return;
+    }
     int x = event.getBlock().getX();
     int z = event.getBlock().getZ();
     Location spawn = getOverWorld(this.plugin).getSpawnLocation();
