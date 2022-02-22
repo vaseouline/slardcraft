@@ -1,5 +1,10 @@
 BordSMP
 TODO:
+Most important thing is server status checker - including progress of server startup
+Second most important thing text message when people get on the server. have a 1hr blocker so people are only texted once per hour max on player join. Probably don't have to do on server startup - altho that could be very convenient - just cause the spin down sucks ass.
+
+-For server map stuff overviewer.
+--need to setup s3 replication with efs
 
 
 
@@ -47,9 +52,12 @@ difficulty: hard
 pvp: true
 keepspawninmemory: true
 
+
+world borders are: x=3/-127 z=-136/-266
+spawn is: x=-62 z=-201
 Have to be set in file:
 spawn protection: 0
-seed: leavearandomseed x-109 z-163
+seed: leavearandomseed 
 World limit: thinking 2k radius is solid
 
 Game Settings
