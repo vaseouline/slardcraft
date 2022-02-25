@@ -6,3 +6,6 @@ commands:
   setradius:
       description: Sets the radius of the border around world spawn
       usage: /<command> <radius>
+  inborder:
+    description: Informs player whether they are within the border or not
+    usage: /<command>

@@ -29,6 +29,7 @@ public class BordSmpPlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new GameStateListener(this), this);
 
         this.getCommand("setradius").setExecutor(new SetRadiusCommand());
+        this.getCommand("inborder").setExecutor(new InBorderCommand(this));
     }
 
     // Fired when plugin is disabled
