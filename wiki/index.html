@@ -208,6 +208,9 @@
                     entry.appendChild(document.createTextNode("" + element.name));
                     list.appendChild(entry);
                 });
+            } else {
+                document.getElementById('server-online').textContent = 'Offline';
+                document.getElementById('server-online').style.color = "red";
             }
     
             
