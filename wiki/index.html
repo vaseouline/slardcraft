@@ -20,6 +20,16 @@
     <h2>
         Play BordSMP
     </h2>
+    <div style="border: 1px solid black; padding: 5px;">
+        <b>Server Status:</b>
+        <span id="server-online" style="color: red;">Offline</span>
+        <span id="player-count"></span>
+        <br>
+        <span><b>Players Online:</b></span>
+        <ul id="player-list" style="padding-left: 3px; margin: 0;">
+        </ul>
+        
+    </div>
     <p>
         BordSMP is hosted on an on-demand server, meaning anybody can turn on the server whenever they want to play. The server is open to play for anyone that knows someone who plays on the server.
         <br><br>
@@ -143,6 +153,65 @@
     <p style="text-align: center;"><i><b>Featured Pic:</b> 'A boy walks home after tending to his farm.' - Jacob <br> 2-20-2022</i></p>
     <h5>Made by Jacob Young
     </h5>
+    
+    <script src="https://mcapi.us/scripts/minecraft.min.js"></script>
+    <script>
+        MinecraftAPI.getServerStatus('play.bordsmp.jacobyng.com', {
+            port: 25565 // optional, only if you need a custom port
+        }, function (err, status) {
+            var serverOnline = false;
+            if (!err) {
+                serverOnline = status.online;
+            }
+            if (serverOnline) {
+                document.getElementById('server-online').textContent = 'Online';
+                document.getElementById('server-online').style.color = "green";
+                document.getElementById('player-count').textContent = '(' + status.players.now + '/' + status.players.max + ')';
+                
+                var list = document.getElementById('player-list');
+
+                var playerList = status.players.sample;
+                // playerList = [
+                //     {
+                //         "name": "yummy",
+                //         "id": "853c80ef3c3749fdaa49938b674adae6"
+                //     },
+                //     {
+                //         "name": "yummy",
+                //         "id": "853c80ef3c3749fdaa49938b674adae6"
+                //     },
+                //     {
+                //         "name": "yummy",
+                //         "id": "853c80ef3c3749fdaa49938b674adae6"
+                //     },
+                //     {
+                //         "name": "yummy",
+                //         "id": "853c80ef3c3749fdaa49938b674adae6"
+                //     },
+                //     {
+                //         "name": "yummy",
+                //         "id": "853c80ef3c3749fdaa49938b674adae6"
+                //     },
+                // ]
+                playerList.forEach(element => {
+                    var entry = document.createElement('li');
+                    entry.style.display = "inline";
+                    entry.style.paddingRight = "60px"
+                    var avatar = document.createElement("img");
+                    avatar.setAttribute("src", "https://crafatar.com/avatars/" + element.id.replace("-",""));
+                    avatar.setAttribute("class", "avatar-text");
+                    avatar.style.paddingRight = "3px";
+                    entry.appendChild(avatar)
+                
+                    entry.appendChild(document.createTextNode("" + element.name));
+                    list.appendChild(entry);
+                });
+            }
+    
+            
+            
+        });
+    </script>
 </body>
 
 </html>
