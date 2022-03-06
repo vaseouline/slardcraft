@@ -2,6 +2,10 @@ BordSMP
 TODO:
 Most important thing is server status checker - including progress of server startup
 
+1. Server status api thingy
+2. Server startup button with code
+3. Minecraft overviewer thingy
+
 -For server map stuff overviewer.
 --need to setup s3 replication with efs
 

@@ -158,6 +158,22 @@
     <p style="text-align: center;"><i><b>Featured Pic:</b> 'A scenic view over a tranquil river from a binocular home.' - Jacob <br> 2022-02-25</i></p>
     <h5>Made by Jacob Young
     </h5>
+
+    <p id="hello1">asdf</p>
+
+    <script>
+        const userAction = async () => {
+            const response = await fetch('https://c40kryu5o3.execute-api.us-west-1.amazonaws.com/latest/get-bordsmp-server-status');
+            const myJson = await response.json(); //extract JSON from the http response
+            // do something with myJson
+            document.getElementById('hello1').textContent = JSON.stringify(myJson);
+        }
+        userAction()
+        window.setInterval(function(){
+            userAction()
+        }, 5000);
+        
+    </script>
     
     <script src="https://mcapi.us/scripts/minecraft.min.js"></script>
     <script>
@@ -176,28 +192,6 @@
                 var list = document.getElementById('player-list');
 
                 var playerList = status.players.sample;
-                // playerList = [
-                //     {
-                //         "name": "yummy",
-                //         "id": "853c80ef3c3749fdaa49938b674adae6"
-                //     },
-                //     {
-                //         "name": "yummy",
-                //         "id": "853c80ef3c3749fdaa49938b674adae6"
-                //     },
-                //     {
-                //         "name": "yummy",
-                //         "id": "853c80ef3c3749fdaa49938b674adae6"
-                //     },
-                //     {
-                //         "name": "yummy",
-                //         "id": "853c80ef3c3749fdaa49938b674adae6"
-                //     },
-                //     {
-                //         "name": "yummy",
-                //         "id": "853c80ef3c3749fdaa49938b674adae6"
-                //     },
-                // ]
                 playerList.forEach(element => {
                     var entry = document.createElement('li');
                     entry.style.display = "inline";
@@ -215,9 +209,6 @@
                 document.getElementById('server-online').textContent = 'Offline';
                 document.getElementById('server-online').style.color = "red";
             }
-    
-            
-            
         });
     </script>
 </body>
