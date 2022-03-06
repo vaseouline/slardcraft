@@ -170,6 +170,7 @@
             if (myJson.serverStatus === "TASK_OFFLINE") {
                 document.getElementById('server-online').textContent = 'Offline';
                 document.getElementById('server-online').style.color = "red";
+                document.getElementById('player-count').textContent = "";
             }
             else if (myJson.serverStatus === "MINECRAFT_ONLINE") {
                 document.getElementById('server-online').textContent = 'Online';
