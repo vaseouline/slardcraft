@@ -39,13 +39,13 @@
                 Visit the initialization website in your web browser linked down below. This initiates the server to start.
             </li>
             <li>
-                Then wait for the server to start up, it typically takes about 10-15 minutes.
+                Then wait for the server to start up, it typically takes about 5-10 minutes.
             </li>
             <li>
                 After the server is started, connect to the server in your Minecraft client with the server domain name below. 
             </li>
             <li>
-                Feel free to message Jacob to be added to the email list to be notified when the Minecraft server is online.
+                For email notification when the server is turned on, feel free to message Jacob to be added to the email list.
             </li>
         </ol> 
         <b>Initialization Website:</b> <a href="http://init.bordsmp.jacobyng.com">init.bordsmp.jacobyng.com</a> 
@@ -159,39 +159,23 @@
     <h5>Made by Jacob Young
     </h5>
 
-    <p id="hello1">asdf</p>
-
     <script>
         const userAction = async () => {
             const response = await fetch('https://c40kryu5o3.execute-api.us-west-1.amazonaws.com/latest/get-bordsmp-server-status');
             const myJson = await response.json(); //extract JSON from the http response
-            // do something with myJson
-            document.getElementById('hello1').textContent = JSON.stringify(myJson);
-        }
-        userAction()
-        window.setInterval(function(){
-            userAction()
-        }, 5000);
-        
-    </script>
-    
-    <script src="https://mcapi.us/scripts/minecraft.min.js"></script>
-    <script>
-        MinecraftAPI.getServerStatus('play.bordsmp.jacobyng.com', {
-            port: 25565 // optional, only if you need a custom port
-        }, function (err, status) {
-            var serverOnline = false;
-            if (!err) {
-                serverOnline = status.online;
+            
+            if (myJson.serverStatus === "TASK_OFFLINE") {
+                document.getElementById('server-online').textContent = 'Offline';
+                document.getElementById('server-online').style.color = "red";
             }
-            if (serverOnline) {
+            else if (myJson.serverStatus === "MINECRAFT_ONLINE") {
                 document.getElementById('server-online').textContent = 'Online';
                 document.getElementById('server-online').style.color = "green";
-                document.getElementById('player-count').textContent = '(' + status.players.now + '/' + status.players.max + ')';
-                
-                var list = document.getElementById('player-list');
+                document.getElementById('player-count').textContent = '(' + myJson.online + '/' + myJson.max + ')';
 
-                var playerList = status.players.sample;
+                var list = document.getElementById('player-list');
+                list.innerHTML = "";
+                var playerList = myJson.players;
                 playerList.forEach(element => {
                     var entry = document.createElement('li');
                     entry.style.display = "inline";
@@ -205,11 +189,34 @@
                     entry.appendChild(document.createTextNode("" + element.name));
                     list.appendChild(entry);
                 });
-            } else {
-                document.getElementById('server-online').textContent = 'Offline';
+            }
+            else if (myJson.serverStatus === "TASK_PENDING") {
+                document.getElementById('server-online').textContent = 'Booting Up Server';
+                document.getElementById('server-online').style.color = "orange";
+            }
+            else if (myJson.serverStatus === "TASK_ONLINE") {
+                document.getElementById('server-online').textContent = 'Booting Up Minecraft';
+                document.getElementById('server-online').style.color = "orange";
+            }
+            else if (myJson.serverStatus == "TASK_RECEIVED") {
+                document.getElementById('server-online').textContent = 'Initialization Request Received';
+                document.getElementById('server-online').style.color = "orange";
+            }
+            else {
+                document.getElementById('server-online').textContent = 'ERROR: Status Unknown';
                 document.getElementById('server-online').style.color = "red";
             }
-        });
+
+        }
+        userAction()
+        myInterval = window.setInterval(function(){
+            userAction()
+        }, 30 * 1000);
+
+        myTimeout = window.setTimeout(function(){
+            window.clearInterval(myInterval)
+        }, 5*60*60*1000);
+        
     </script>
 </body>
 

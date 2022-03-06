@@ -22,3 +22,5 @@ print(json.dumps({
 }
 )
 )
+
+status.players.

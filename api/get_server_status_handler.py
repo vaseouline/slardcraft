@@ -23,16 +23,22 @@ def lambda_handler(event, context):
                 status = server.status()
             except Exception as e:
                 print(repr(e))
-            if (status):
+            if status:
                 # return player everything.
+                player_list = []
+                if status.players.sample:
+                    player_list = status.players.sample
+                
                 return message(200, {
                         'serverStatus': 'MINECRAFT_ONLINE',
+                        'max': status.players.max,
+                        'online': status.players.online,
                         'players': [
                             {
                                 'id': player.id,
                                 'name': player.name
                             }
-                            for player in status.players.sample
+                            for player in player_list
                         ]
                     })
             else:
@@ -54,6 +60,7 @@ def lambda_handler(event, context):
         print(repr(e))
         
         return message(500, {
+                'serverStatus': 'UNKNOWN',
                 'message': repr(e)
             })
 
