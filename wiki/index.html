@@ -57,7 +57,7 @@
         <div>
             <b>Code:</b>
             <input type="text" id="code-input" style="font-family: monospace; width: 5em;">
-            <button onclick="startServer()">Start Server</button>
+            <button onclick="startServer()" disabled id="start-button">Start Server</button>
         </div>
 
         <br>
@@ -210,8 +210,9 @@
         const userAction = async () => {
             const response = await fetch('https://c40kryu5o3.execute-api.us-west-1.amazonaws.com/latest/get-bordsmp-server-status');
             const myJson = await response.json(); //extract JSON from the http response
-
+            document.getElementById('start-button').disabled = true;
             if (myJson.serverStatus === "TASK_OFFLINE" && !serverStarting) {
+                document.getElementById('start-button').disabled = false;
                 document.getElementById('server-online').textContent = 'Offline';
                 document.getElementById('server-online').style.color = "red";
                 document.getElementById('player-count').textContent = "";
@@ -291,6 +292,7 @@
                 alert("That's not the right code.")
             }
             else if (myJson.status == "STARTING_SERVER" || myJson.status == "SERVER_ALREADY_STARTED") {
+                document.getElementById('start-button').disabled = true;
                 const response2 = await fetch('https://c40kryu5o3.execute-api.us-west-1.amazonaws.com/latest/get-bordsmp-server-status');
                 serverStarting = true;
                 const myJson2 = await response2.json();

@@ -1,5 +1,7 @@
 BordSMP
 TODO:
+Disable button after server is starting
+
 Most important thing is server status checker - including progress of server startup
 
 1. Server status api thingy
