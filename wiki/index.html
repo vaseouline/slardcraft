@@ -6,307 +6,303 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BordSMP Wiki</title>
     <link rel="stylesheet" href="./style.css">
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 
 <body>
-    <H1>BordSMP</H1>
-    <hr>
-    <div>
+    <div class="bg">
+        <div class="bd">
+            <div>
+                <h1>
+                    Play BordSMP
+                </h1>
+                <div style="border: 1px solid black; padding: 5px;">
+                    <b>IP/Domain name:</b> play.bordsmp.jacobyng.com
+                    <br>
+                    <b>Server Status:</b>
+                    <span id="server-online" style="color: orange;">Requesting Status</span>
+                    <span id="player-count"></span>
+                    <br>
+                    <b>Server Version:</b>
+                    <span id="server-version"></span>
+                    <br>
+                    <span><b>Players Online:</b></span>
+                    <ul id="player-list" style="padding-left: 3px; margin: 0;">
+                    </ul>
 
-        <h2>What is BordSMP?</h2>
-        <p>
-            Border + Bored = Bord Survival Multiplayer for Minecraft
-            <br>
-            This server is the spiritual successor of the old vanilla Minecraft server made better and more social with
-            a
-            few changes.
-        </p>
-    </div>
-    <hr>
-    <div>
-        <h2>
-            Play BordSMP
-        </h2>
-        <div style="border: 1px solid black; padding: 5px;">
-            <b>IP/Domain name:</b> play.bordsmp.jacobyng.com
-            <br>
-            <b>Server Status:</b>
-            <span id="server-online" style="color: orange;">Requesting Status</span>
-            <span id="player-count"></span>
-            <br>
-            <span><b>Players Online:</b></span>
-            <ul id="player-list" style="padding-left: 3px; margin: 0;">
-            </ul>
+                </div>
 
+
+                <p>
+                    <b>To start the server simply:</b>
+                <ol>
+                    <li>
+                        Type the <b>server code</b> into
+                        <input type="text" id="code-input" style="font-family: monospace; width: 4em;">
+                        and press <button onclick="startServer()" disabled id="start-button">Start Server</button>. [1]
+                    </li>
+                    <li>
+                        <b>Wait</b> for the server to start. <i>5-10 minutes</i> [2]
+                    </li>
+                </ol>
+                <i>
+                    [1] Ask a friend on the server for the server code.
+                    <br>
+                    [2] Message Jacob to be added to the email list to be notified when the server is online.
+
+                </i>
+                </p>
+            </div>
+            <hr>
+            <div>
+                <h2>Gameplay Changes</h2>
+                <h3>Main Changes</h3>
+                <ol>
+                    <li>
+                        There is an invisible border around spawn.
+                    </li>
+                    <li>
+                        Beds cannot be slept in outside of this border, so respawn will always be within the border.
+                    </li>
+                    <li>
+                        Wearing armor outside the border causes the wearer to suffer damage over time.
+                    </li>
+                    <li>
+                        Being in the Nether or the End is considered outside of the border.
+                    </li>
+                    <li>
+                        Command '/inborder' will inform you whether or not you're in the border.
+                    </li>
+                </ol>
+                <h3>Additional Changes</h3>
+                <ul>
+                    <li>
+                        Dying to pvp where either player is in the border loses the killed no items or levels.
+                    </li>
+                    <li>
+                        Fortune has been removed for pickaxes. [3]
+                    </li>
+                    <li>
+                        Infinity has been removed for bows. [3]
+                    </li>
+                    <li>
+                        Respawn anchors have been removed.
+                    </li>
+                    <li>
+                        Shulker boxes have been removed.
+                    </li>
+                    <li>
+                        Elytra have been removed.
+                    </li>
+                </ul>
+                <i>
+                    [3] Removed enchants are replaced with mending when found in an enchantment table.
+                </i>
+            </div>
+            <hr>
+            <div>
+                <h2>Game Settings</h2>
+                <ul>
+                    <li>
+                        <b>Sleep through night: </b> Disabled
+                    </li>
+                    <li>
+                        <b>Insomnia (phantoms):</b> Disabled
+                    </li>
+                    <li>
+                        <b>Difficulty:</b> Hard
+                    </li>
+                    <li>
+                        <b>Border:</b> 65 radius
+                    </li>
+                    <li>
+                        <b>World Limit:</b> 2k radius
+                    </li>
+                    <li>
+                        <b>PVP:</b> True
+                    </li>
+                    <li>
+                        <b>Achievements:</b> Hidden
+                    </li>
+                </ul>
+            </div>
+            <hr>
+            <div>
+                <h2>Bannable Offenses</h2>
+                <ol>
+                    <li>
+                        Using lava or lava casting to grief within the border.
+                    </li>
+                    <li>
+                        Because the server is dynamically allocated, solo afk farming costs Jacob money. Afk farming
+                        should be
+                        limited to when other players are playing on the server.
+                    </li>
+                    <li>
+                        Infinite TNT exploit. Doubly so within or near the border.
+                    </li>
+                    <li>
+                        Cheating using x-ray or hacked clients.
+                    </li>
+                    <li>
+                        Creating any lag machines.
+                    </li>
+                </ol>
+            </div>
+
+            <hr>
+            <div>
+                <h2>Overviewer</h2>
+                <p>
+                    Currently, updates have to be done manually for the overviewer.
+                    <br>
+                    Hopefully, will be automatic soon.
+                </p>
+                <a href="overviewer/index.html#/-75/64/-198/-2/world/world-smooth_lighting" style="float: right;">
+                    [Full Screen]
+                </a>
+                <iframe src="overviewer/index.html#/-75/64/-198/max/world/world-smooth_lighting" title="Minecraft Overviewer of BordSMP map."
+                    style="border: 1px solid black;" height="600px"></iframe>
+            </div>
+
+            <hr>
+
+            <div>
+
+                <h2>Why BordSMP?</h2>
+                <p>
+                    Border + Bored = Bord Survival Multiplayer for Minecraft
+                    <br><br>
+
+                    The point of BordSMP is to provide a long term enjoyment Minecraft server. This server is cheap asfk
+                    for me to run, so it's going to stay here forever.
+                    I also wanted to slow down the pace of the game, by removing armor. And incentivize building over
+                    stat-gathering. To improve the longevity of the game. It also incentivizes working together in PvE
+                    settings such as the nether.
+                    Respawn always starts within the border to incentivize creating things close to each other, plus
+                    creating awesome transportation methods across the lands. Plus it provides additional challenge for
+                    those who want to live far away.
+                    PVP is also incentivized within the town border, as player's killed within the border revive without
+                    losing anything for free.
+                    I also removed OP items that I think too strongly separate old heads and new heads. It feels bad to
+                    craft arrows when people are out here shooting infinitely. It feels bad to collect diamonds when
+                    people have fortune. Elytra and shulker boxes are giga OP. and Elytra lags the server a lot.
+
+                    <br><br>
+                    Pretty much all of these changes can be considered nerfs, but hopefully you guys will find it
+                    rewarding to play with these additional challenges!
+
+                    <br><br>
+                    Open to play for anyone that has a friend on the server!
+                </p>
+            </div>
         </div>
-
-
-        <p>
-            The server is open to play for anyone that has a friend on the server!
-            <br><br>
-            <b>To start the server simply:</b>
-        <ol>
-            <li>
-                Type the <b>server code</b> into the <b>form</b> below and press <b>"Start Server"</b>. [1]
-            </li>
-            <li>
-                <b>Wait</b> for the server to start. <i>5-10 minutes</i> [2]
-            </li>
-
-        </ol>
-        <div>
-            <b>Code:</b>
-            <input type="text" id="code-input" style="font-family: monospace; width: 5em;">
-            <button onclick="startServer()" disabled id="start-button">Start Server</button>
-        </div>
-
-        <br>
-        <i>
-            [1] Ask a friend on the server for the server code.
-            <br>
-            [2] Message Jacob to be added to the email list to be notified when the server is online.
-
-        </i>
-        </p>
     </div>
-    <hr>
+</body>
 
-    <div>
-        <h2>Gameplay Changes</h2>
-        <h3>Main Changes</h3>
-        <ol>
-            <li>
-                There is an invisible border around spawn.
-            </li>
-            <li>
-                Beds cannot be slept in outside of this border, so respawn will always be within the border.
-            </li>
-            <li>
-                Wearing armor outside the border causes the wearer to suffer damage over time.
-            </li>
-            <li>
-                Being in the Nether or the End is considered outside of the border.
-            </li>
-            <li>
-                Command '/inborder' will inform you whether or not you're in the border.
-            </li>
-        </ol>
-        <h3>Additional Changes</h3>
-        <ul>
-            <li>
-                Dying to pvp where either player is in the border loses the killed no items or levels.
-            </li>
-            <li>
-                Fortune has been removed for pickaxes.
-            </li>
-            <li>
-                Infinity has been removed for bows.
-            </li>
-            <li>
-                Respawn anchors have been removed.
-            </li>
-            <li>
-                Shulker boxes have been removed.
-            </li>
-            <li>
-                Elytra have been removed.
-            </li>
-        </ul>
-    </div>
-    <hr>
-    <div>
-        <h2>Game Settings</h2>
-        <ul>
-            <li>
-                <b>Sleep through night: </b> Disabled
-            </li>
-            <li>
-                <b>Insomnia (phantoms):</b> Disabled
-            </li>
-            <li>
-                <b>Difficulty:</b> Hard
-            </li>
-            <li>
-                <b>Border:</b> 65 radius
-            </li>
-            <li>
-                <b>World Limit:</b> 2k radius
-            </li>
-            <li>
-                <b>PVP:</b> True
-            </li>
-            <li>
-                <b>Achievements:</b> Hidden
-            </li>
-            <li>
-                <b>Server Version:</b> Spigot: Latest Release
-            </li>
-        </ul>
-    </div>
-    <hr>
-    <div>
-        <h2>Game Rules</h2>
-        <ol>
-            <li>
-                Using lava to grief within the border is against the rules. Same with lava casting.
-            </li>
-            <li>
-                Abusing overlooked ways to get removed items/enchants is considered against the spirit of the game.
-            </li>
-            <li>
-                Because the server is dynamically allocated, solo afk farming costs Jacob money. Afk farming should be
-                limited to when other players are playing on the server.
-            </li>
-            <li>
-                Infinite TNT is considered against the rules. Doubly so within or near the border.
-            </li>
-            <li>
-                Cheating using x-ray or hacked clients is against the rules. Not an anarchy server.
-            </li>
-        </ol>
-    </div>
-    <hr>
-    <div>
-        <h2>Game Guidelines</h2>
-        <ol>
-            <li>
-                Taking items from another player's chest is not against the server rules; however, player discretion
-                should
-                be advised as the game does not lift social responsibilities in the real world.
-            </li>
-            <li>
-                Griefing is discouraged; however, due to the size restraint of the border, some tearing down/collision
-                with
-                other people's builds is to be expected. In these conflicts, players are asked to try being open minded.
-            </li>
-            <li>
-                Pvp follows the same as point 1.
-            </li>
-        </ol>
-    </div>
+<script>
+    var serverStarting = false;
+    const userAction = async () => {
+        const response = await fetch('https://c40kryu5o3.execute-api.us-west-1.amazonaws.com/latest/get-bordsmp-server-status');
+        const myJson = await response.json(); //extract JSON from the http response
+        document.getElementById('start-button').disabled = true;
+        if (myJson.serverStatus === "TASK_OFFLINE" && !serverStarting) {
+            document.getElementById('start-button').disabled = false;
+            document.getElementById('server-online').textContent = 'Offline';
+            document.getElementById('server-online').style.color = "red";
+            document.getElementById('player-count').textContent = "";
+        }
+        else if (myJson.serverStatus === "MINECRAFT_ONLINE") {
+            serverStarting = false;
+            document.getElementById('server-version').textContent = myJson.serverVersion;
+            document.getElementById('server-online').textContent = 'Online';
+            document.getElementById('server-online').style.color = "green";
+            document.getElementById('player-count').textContent = '(' + myJson.online + '/' + myJson.max + ')';
 
-    <hr>
-    <div>
-        <h2>Overviewer</h2> 
-        <p>
-            Currently, updates have to be done manually for the overviewer. 
-            <br>
-            Hopefully, will be automatic soon.
-        </p>
-        <a href="overviewer\index.html">
-            <img src="Screenshot 2022-02-25 235917.png" style="border: 1px solid black;"
-                alt="Featured Pic: 'A binocular view over a tranquil river.' 2022-02-25">
-        </a>
-        
-        <p style="text-align: center;"><i><b>Featured Pic:</b> 'A binocular view over a tranquil river.'
-                - Jacob <br> 2022-02-25</i></p>
-        <h5>Made by Jacob Young
-        </h5>
-    </div>
+            var list = document.getElementById('player-list');
+            list.innerHTML = "";
+            var playerList = myJson.players;
+            playerList.forEach(element => {
+                var entry = document.createElement('li');
+                entry.style.display = "inline";
+                entry.style.paddingRight = "60px"
+                var avatar = document.createElement("img");
+                avatar.setAttribute("src", "https://crafatar.com/avatars/" + element.id.replace("-", ""));
+                avatar.setAttribute("class", "avatar-text");
+                avatar.style.paddingRight = "3px";
+                entry.appendChild(avatar)
 
+                entry.appendChild(document.createTextNode("" + element.name));
+                list.appendChild(entry);
+            });
+        }
+        else if (myJson.serverStatus === "TASK_PENDING") {
+            serverStarting = false;
+            document.getElementById('server-online').textContent = 'Booting Up Server';
+            document.getElementById('server-online').style.color = "orange";
+        }
+        else if (myJson.serverStatus === "TASK_ONLINE") {
+            serverStarting = false;
+            document.getElementById('server-online').textContent = 'Booting Up Minecraft';
+            document.getElementById('server-online').style.color = "orange";
+        }
+        else if (myJson.serverStatus == "TASK_RECEIVED") {
+            serverStarting = false;
+            document.getElementById('server-online').textContent = 'Initialization Request Received';
+            document.getElementById('server-online').style.color = "orange";
+        }
+        else {
+            document.getElementById('server-online').textContent = 'ERROR: Status Unknown';
+            document.getElementById('server-online').style.color = "red";
+        }
 
-    <script>
-        var serverStarting = false;
-        const userAction = async () => {
-            const response = await fetch('https://c40kryu5o3.execute-api.us-west-1.amazonaws.com/latest/get-bordsmp-server-status');
-            const myJson = await response.json(); //extract JSON from the http response
+    }
+    userAction()
+    myInterval = window.setInterval(function () {
+        userAction()
+    }, 30 * 1000);
+
+    myTimeout = window.setTimeout(function () {
+        window.clearInterval(myInterval)
+    }, 5 * 60 * 60 * 1000);
+
+</script>
+
+<script>
+
+    const startServer = async () => {
+        const response = await fetch('https://c40kryu5o3.execute-api.us-west-1.amazonaws.com/latest/start-server',
+            {
+                method: 'POST',
+                headers: {
+                    'Accept': 'applcation/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    'code': document.getElementById('code-input').value
+                })
+            });
+        const myJson = await response.json(); //extract JSON from the http response
+
+        if (myJson.status == "WRONG_CODE") {
+            alert("That's not the right code.")
+        }
+        else if (myJson.status == "STARTING_SERVER" || myJson.status == "SERVER_ALREADY_STARTED") {
             document.getElementById('start-button').disabled = true;
-            if (myJson.serverStatus === "TASK_OFFLINE" && !serverStarting) {
-                document.getElementById('start-button').disabled = false;
-                document.getElementById('server-online').textContent = 'Offline';
-                document.getElementById('server-online').style.color = "red";
+            const response2 = await fetch('https://c40kryu5o3.execute-api.us-west-1.amazonaws.com/latest/get-bordsmp-server-status');
+            serverStarting = true;
+            const myJson2 = await response2.json();
+            if (document.getElementById('server-online').textContent === "Offline") {
+                document.getElementById('server-online').textContent = 'Initialization Request Sent';
+                document.getElementById('server-online').style.color = "orange";
                 document.getElementById('player-count').textContent = "";
             }
-            else if (myJson.serverStatus === "MINECRAFT_ONLINE") {
-                serverStarting = false;
-                document.getElementById('server-online').textContent = 'Online';
-                document.getElementById('server-online').style.color = "green";
-                document.getElementById('player-count').textContent = '(' + myJson.online + '/' + myJson.max + ')';
-
-                var list = document.getElementById('player-list');
-                list.innerHTML = "";
-                var playerList = myJson.players;
-                playerList.forEach(element => {
-                    var entry = document.createElement('li');
-                    entry.style.display = "inline";
-                    entry.style.paddingRight = "60px"
-                    var avatar = document.createElement("img");
-                    avatar.setAttribute("src", "https://crafatar.com/avatars/" + element.id.replace("-", ""));
-                    avatar.setAttribute("class", "avatar-text");
-                    avatar.style.paddingRight = "3px";
-                    entry.appendChild(avatar)
-
-                    entry.appendChild(document.createTextNode("" + element.name));
-                    list.appendChild(entry);
-                });
-            }
-            else if (myJson.serverStatus === "TASK_PENDING") {
-                serverStarting = false;
-                document.getElementById('server-online').textContent = 'Booting Up Server';
-                document.getElementById('server-online').style.color = "orange";
-            }
-            else if (myJson.serverStatus === "TASK_ONLINE") {
-                serverStarting = false;
-                document.getElementById('server-online').textContent = 'Booting Up Minecraft';
-                document.getElementById('server-online').style.color = "orange";
-            }
-            else if (myJson.serverStatus == "TASK_RECEIVED") {
-                serverStarting = false;
-                document.getElementById('server-online').textContent = 'Initialization Request Received';
-                document.getElementById('server-online').style.color = "orange";
-            }
-            else {
-                document.getElementById('server-online').textContent = 'ERROR: Status Unknown';
-                document.getElementById('server-online').style.color = "red";
-            }
-
         }
-        userAction()
-        myInterval = window.setInterval(function () {
-            userAction()
-        }, 30 * 1000);
-
-        myTimeout = window.setTimeout(function () {
-            window.clearInterval(myInterval)
-        }, 5 * 60 * 60 * 1000);
-
-    </script>
-
-    <script>
-
-        const startServer = async () => {
-            const response = await fetch('https://c40kryu5o3.execute-api.us-west-1.amazonaws.com/latest/start-server',
-                {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'applcation/json',
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        'code': document.getElementById('code-input').value
-                    })
-                });
-            const myJson = await response.json(); //extract JSON from the http response
-
-            if (myJson.status == "WRONG_CODE") {
-                alert("That's not the right code.")
-            }
-            else if (myJson.status == "STARTING_SERVER" || myJson.status == "SERVER_ALREADY_STARTED") {
-                document.getElementById('start-button').disabled = true;
-                const response2 = await fetch('https://c40kryu5o3.execute-api.us-west-1.amazonaws.com/latest/get-bordsmp-server-status');
-                serverStarting = true;
-                const myJson2 = await response2.json();
-                if (document.getElementById('server-online').textContent === "Offline") {
-                    document.getElementById('server-online').textContent = 'Initialization Request Sent';
-                    document.getElementById('server-online').style.color = "orange";
-                    document.getElementById('player-count').textContent = "";
-                }
-            }
-            else {
-                alert("Error: Something wrong happened.")
-            }
+        else {
+            alert("Error: Something wrong happened.")
         }
-    </script>
-</body>
+    }
+</script>
 
 </html>

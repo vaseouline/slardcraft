@@ -1,11 +1,4 @@
-body {
-    max-width: 600px;
-    padding-left: 10px;
-    padding-right: 10px;
-    margin: 0 auto;
-    font-family: monospace;
-    background-color: gainsboro;
-}
+
 
 img {
     max-width: 600px;
@@ -13,7 +6,35 @@ img {
     width: 100%;
 }
 
+iframe {
+    max-width: 600px;
+    width: 100%;
+}
+
 .avatar-text {
     height: 1em;
     width: 1em;
+}
+
+body {
+    background-color: black;
+    margin: 0 0;
+}
+
+.bg {
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='10em' width='10em'><text x='0' y='1em' fill='gainsboro' font-size='1em'>BORDSMP</text></svg>");
+    background-attachment: fixed;
+    background-color: black;
+    padding: 10px;
+}
+
+.bd {
+    
+    max-width: 600px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: 0px auto;
+    font-family: monospace;
+    background-color: gainsboro;
+    border: 1px solid black;
 }

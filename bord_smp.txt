@@ -1,11 +1,21 @@
 BordSMP
 TODO:
-Disable button after server is starting
+Add in rules: lagmachines and crashing the server is against the rules
 
-Most important thing is server status checker - including progress of server startup
+Can move the link to a specific location for overviewer
+http://bordsmp.jacobyng.com/overviewer/index.html#/-112/64/-111/-2/world/world-smooth_lighting
+see if i can mount the server location to a /home/minecraft/server or whatever
+see if i can mount render location too, first make the directory in the actual renderer, then mount it to /home/minecraft/render
+Then this is probably my best bet https://github.com/mide/minecraft-overviewer
+After the render is done, I just need to run a datasync between efs of the index to borsmp.com index location
+See the exact file structure of the efs as well.
+Might have to make a custom docker file..
 
-1. Server status api thingy
-2. Server startup button with code
+I suppose this could all be a step function thingy.
+
+First try this with the vanilla serveror just make a backup of the world
+
+sudo mount -t efs -o tls,accesspoint=fsap-08c0f0e071bc16193 fs-0ae88af538d888eb0: ~/slardefs
 3. Minecraft overviewer thingy
 
 -For server map stuff overviewer.
