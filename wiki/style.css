@@ -23,12 +23,10 @@ body {
 
 .bd {
     
-    width: 22.4em;
-    height: 7.5em;
-    top: 40%;
+    width: fit-content;
+    height: fit-content;
+    top: 30%;
     left: 50%;
-    margin-top: -3.75em;
-    margin-left: -11.2em;
     position: absolute;
     font-family: monospace;
     background-color: gainsboro;

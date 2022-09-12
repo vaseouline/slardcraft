@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <div class="bd">
+    <div class="bd" id="bd">
         <b>Server Code</b>:
         <input type="text" id="code-input">
         <button onclick="startServer()" disabled id="start-button">Start Server</button>
@@ -31,6 +31,11 @@
 
     </div>
 </body>
+
+<script>
+    var bdWidth = document.getElementById('bd').clientWidth;
+    document.getElementById('bd').style.marginLeft = bdWidth/-2 + "px";
+</script>
 
 <script>
     var serverStarting = false;
