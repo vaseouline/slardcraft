@@ -18,23 +18,29 @@ iframe {
 
 body {
     background-color: black;
-    margin: 0 0;
-}
-
-.bg {
     background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='10em' width='10em'><text x='0' y='1em' fill='gainsboro' font-size='1em'>BORDSMP</text></svg>");
-    background-attachment: fixed;
-    background-color: black;
-    padding: 10px;
 }
 
 .bd {
     
-    max-width: 600px;
-    padding-left: 10px;
-    padding-right: 10px;
-    margin: 0px auto;
+    width: 22.4em;
+    height: 7.5em;
+    top: 40%;
+    left: 50%;
+    margin-top: -3.75em;
+    margin-left: -11.2em;
+    position: absolute;
     font-family: monospace;
     background-color: gainsboro;
-    border: 1px solid black;
+    outline: 1px solid black;
+    padding: .5em;
+}
+
+button {
+    font-family: monospace;
+}
+
+input {
+    font-family: monospace; 
+    width: 4em;
 }

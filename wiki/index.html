@@ -11,196 +11,24 @@
 </head>
 
 <body>
-    <div class="bg">
-        <div class="bd">
-            <div>
-                <h1>
-                    BordSMP
-                </h1>
-                <hr>
-                <h2>Play</h2>
-                <div style="border: 1px solid black; padding: 5px;">
-                    <b>IP/Domain name:</b> play.bordsmp.jacobyng.com
-                    <br>
-                    <b>Server Status:</b>
-                    <span id="server-online" style="color: orange;">Requesting Status</span>
-                    <span id="player-count"></span>
-                    <br>
-                    <b>Server Version:</b>
-                    <span id="server-version"></span>
-                    <br>
-                    <span><b>Players Online:</b></span>
-                    <ul id="player-list" style="padding-left: 3px; margin: 0;">
-                    </ul>
+    <div class="bd">
+        <b>Server Code</b>:
+        <input type="text" id="code-input">
+        <button onclick="startServer()" disabled id="start-button">Start Server</button>
+        <hr>
+        <b>IP/Domain Name:</b> play.bordsmp.jacobyng.com
+        <br>
+        <b>Server Status:</b>
+        <span id="server-online" style="color: orange;">Requesting Status</span>
+        <span id="player-count"></span>
+        <br>
+        <b>Server Version:</b>
+        <span id="server-version"></span>
+        <br>
+        <span><b>Players Online:</b></span>
+        <ul id="player-list" style="padding-left: 3px; margin: 0;">
+        </ul>
 
-                </div>
-
-
-                <p>
-                    <b>To start the server simply:</b>
-                <ol>
-                    <li>
-                        Type the <b>server code</b> into
-                        <input type="text" id="code-input" style="font-family: monospace; width: 4em;">
-                        and press <button onclick="startServer()" disabled id="start-button">Start Server</button>. [1]
-                    </li>
-                    <li>
-                        <b>Wait</b> for the server to start. <i>5-10 minutes</i> [2]
-                    </li>
-                </ol>
-                <i>
-                    [1] Ask a friend on the server for the server code.
-                    <br>
-                    [2] Message Jacob to be added to the email list to be notified when the server is online.
-
-                </i>
-                </p>
-            </div>
-            <hr>
-            <div>
-                <h2>Gameplay Changes</h2>
-                <h3>Main Changes</h3>
-                <ol>
-                    <li>
-                        There is an invisible border around spawn.
-                    </li>
-                    <li>
-                        Beds cannot be slept in outside of this border, so respawn will always be within the border.
-                    </li>
-                    <li>
-                        Wearing armor outside the border causes the wearer to suffer damage over time.
-                    </li>
-                    <li>
-                        Being in the Nether or the End is considered outside of the border.
-                    </li>
-                    <li>
-                        Command '/inborder' will inform you whether or not you're in the border.
-                    </li>
-                </ol>
-                <h3>Additional Changes</h3>
-                <ul>
-                    <li>
-                        Dying to pvp where either player is in the border loses the killed no items or levels.
-                    </li>
-                    <li>
-                        Fortune has been removed for pickaxes. [3]
-                    </li>
-                    <li>
-                        Infinity has been removed for bows. [3]
-                    </li>
-                    <li>
-                        Respawn anchors have been removed.
-                    </li>
-                    <li>
-                        Shulker boxes have been removed.
-                    </li>
-                    <li>
-                        Elytra have been removed.
-                    </li>
-                </ul>
-                <i>
-                    [3] Removed enchants are replaced with mending when found in an enchantment table.
-                </i>
-            </div>
-            <hr>
-            <div>
-                <h2>Game Settings</h2>
-                <ul>
-                    <li>
-                        <b>Sleep through night: </b> Disabled
-                    </li>
-                    <li>
-                        <b>Insomnia (phantoms):</b> Disabled
-                    </li>
-                    <li>
-                        <b>Difficulty:</b> Hard
-                    </li>
-                    <li>
-                        <b>Border:</b> 65 radius
-                    </li>
-                    <li>
-                        <b>World Limit:</b> 2k radius
-                    </li>
-                    <li>
-                        <b>PVP:</b> True
-                    </li>
-                    <li>
-                        <b>Achievements:</b> Hidden
-                    </li>
-                </ul>
-            </div>
-            
-
-            <hr>
-            <div>
-                <h2>Overviewer</h2>
-                <p>
-                    Currently, updates have to be done manually for the overviewer.
-                    <br>
-                    Hopefully, will be automatic soon.
-                </p>
-                <a href="overviewer/index.html#/-75/64/-198/-2/world/world-smooth_lighting" style="float: right;">
-                    [Full Screen]
-                </a>
-                <iframe src="overviewer/index.html#/-75/64/-198/max/world/world-smooth_lighting" title="Minecraft Overviewer of BordSMP map."
-                    style="border: 1px solid black;" height="600px"></iframe>
-            </div>
-
-            <hr>
-
-            <div>
-
-                <h2>Why BordSMP?</h2>
-                <p>
-                    Border + Bored = Bord Survival Multiplayer for Minecraft
-                    <br><br>
-
-                    The point of BordSMP is to provide a long term enjoyment Minecraft server. This server is cheap asfk
-                    for me to run, so it's going to stay here forever.
-                    I also wanted to slow down the pace of the game, by removing armor. And incentivize building over
-                    stat-gathering. To improve the longevity of the game. It also incentivizes working together in PvE
-                    settings such as the nether.
-                    Respawn always starts within the border to incentivize creating things close to each other, plus
-                    creating awesome transportation methods across the lands. Plus it provides additional challenge for
-                    those who want to live far away.
-                    PVP is also incentivized within the town border, as player's killed within the border revive without
-                    losing anything for free.
-                    I also removed OP items that I think too strongly separate old heads and new heads. It feels bad to
-                    craft arrows when people are out here shooting infinitely. It feels bad to collect diamonds when
-                    people have fortune. Elytra and shulker boxes are giga OP. and Elytra lags the server a lot.
-
-                    <br><br>
-                    Pretty much all of these changes can be considered nerfs, but hopefully you guys will find it
-                    rewarding to play with these additional challenges!
-
-                    <br><br>
-                    Open to play for anyone that has a friend on the server!
-                </p>
-            </div>
-            <hr>
-            <div>
-                <h2>Bannable Offenses</h2>
-                <ol>
-                    <li>
-                        Using lava or lava casting to grief within the border.
-                    </li>
-                    <li>
-                        Because the server is dynamically allocated, solo afk farming costs Jacob money. Afk farming
-                        should be
-                        limited to when other players are playing on the server.
-                    </li>
-                    <li>
-                        Infinite TNT exploit. Doubly so within or near the border.
-                    </li>
-                    <li>
-                        Cheating using x-ray or hacked clients.
-                    </li>
-                    <li>
-                        Creating any lag machines.
-                    </li>
-                </ol>
-            </div>
-        </div>
     </div>
 </body>
 
