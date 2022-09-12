@@ -1,8 +1,5 @@
 package slard.craft;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Difficulty;
 import org.bukkit.GameRule;
@@ -13,9 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
@@ -42,7 +37,7 @@ public class GameStateListener implements Listener {
       } catch (NumberFormatException e) {
         System.out.println("Border radius could not be set to: " + System.getenv("BORDER_RADIUS"));
       }
-      
+
     }
     this.plugin = plugin;
     setGameRules(getOverWorld(plugin));
@@ -74,7 +69,8 @@ public class GameStateListener implements Listener {
     scheduler.runTaskTimer(plugin, task -> {
       for (Player p : plugin.getServer().getOnlinePlayers()) {
         if (!inTown(p.getLocation(), spawn) && wearingArmor(p.getInventory())) {
-          p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.RED + "You are taking damage for wearing armor outside the border!"));
+          p.spigot().sendMessage(ChatMessageType.ACTION_BAR,
+              new TextComponent(ChatColor.RED + "You are taking damage for wearing armor outside the border!"));
           p.damage(OUTSIDE_BORDER_DAMAGE);
         }
       }
@@ -132,21 +128,6 @@ public class GameStateListener implements Listener {
     }
   }
 
-  // @EventHandler
-  // public void preventBuildOnBorder(BlockPlaceEvent event) {
-  //   if (event.getBlock().getLocation().getWorld().getEnvironment() != Environment.NORMAL) {
-  //     return;
-  //   }
-  //   int x = event.getBlock().getX();
-  //   int z = event.getBlock().getZ();
-  //   Location spawn = getOverWorld(this.plugin).getSpawnLocation();
-  //   // weirdness requires negative number to subtract 1 - to match town border
-  //   double[] xz = getBorderXZ(spawn);
-  //   if (x == xz[0] || x == xz[1] - 1 || z == xz[2] || z == xz[3] - 1) {
-  //     event.setCancelled(true);
-  //   }
-  // }
-
   @EventHandler
   public void replacePlayerRespawnEvent(PlayerRespawnEvent event) {
     Location spawn = getOverWorld(this.plugin).getSpawnLocation();
@@ -156,7 +137,7 @@ public class GameStateListener implements Listener {
   }
 
   @EventHandler
-  public void preventOutdoorSleep(PlayerInteractEvent  event) {
+  public void preventOutdoorSleep(PlayerInteractEvent event) {
     if (event.getClickedBlock() == null) {
       return;
     }
