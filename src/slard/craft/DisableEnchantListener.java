@@ -145,14 +145,6 @@ public class DisableEnchantListener implements Listener {
         if (BordSmpPlugin.DEBUG)
             Bukkit.broadcastMessage("Original item: " + is.toString());
 
-        if (BordSmpPlugin.BANNED_CRAFT_SET.contains(is.getType())) {
-            if (BordSmpPlugin.DEBUG)
-                Bukkit.broadcastMessage("replacing banned with legal item: "
-                        + BordSmpPlugin.BANNED_CRAFT_MAP.get(is.getType()).toString());
-            is.setType(BordSmpPlugin.BANNED_CRAFT_MAP.get(is.getType()));
-            return true;
-        }
-
         if (is.getType().equals(Material.ENCHANTED_BOOK)) {
             EnchantmentStorageMeta eSM = (EnchantmentStorageMeta) is.getItemMeta();
             if (eSM.hasStoredEnchant(Enchantment.ARROW_INFINITE)) {
