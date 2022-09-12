@@ -11,7 +11,9 @@ public class BordSmpPlugin extends JavaPlugin {
             DEBUG = false;
         }
         DEBUG = Boolean.parseBoolean(System.getenv("SLARD_DEBUG"));
+        getServer().getPluginManager().registerEvents(new DisableEnchantListener(), this);
         getServer().getPluginManager().registerEvents(new GameStateListener(this), this);
+
         this.getCommand("inborder").setExecutor(new InBorderCommand(this));
     }
 
